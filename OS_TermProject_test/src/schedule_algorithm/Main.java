@@ -4,6 +4,6 @@ public class Main {
 	 public static void main(String[] args) {
 		 int a=0;
 		 System.out.println(a);
-		 System.out.println("깃허브 연동 테스트..4th push yang");
+		 System.out.println("깃허브 연동 테스트..5th push park");
 	 }
 }
