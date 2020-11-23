@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Index extends JFrame{
 	public Index() {
-		setTitle("index");
+		setTitle("test");
 		setSize(300,300);
 		setVisible(true);
 	}
