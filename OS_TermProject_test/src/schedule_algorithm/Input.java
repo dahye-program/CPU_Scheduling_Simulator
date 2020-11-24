@@ -54,5 +54,6 @@ public class Input extends JFrame{
 				
 		getContentPane().add(ButtonInputComplete);
 		//Hello
+		//gfyhgfy
 	}
 }
