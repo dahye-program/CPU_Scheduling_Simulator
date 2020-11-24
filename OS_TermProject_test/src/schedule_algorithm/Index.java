@@ -65,6 +65,7 @@ public class Index extends JFrame{
 			public void mouseClicked(MouseEvent e) {
 				int ProcessCount = Integer.parseInt(TextInputProcessCount.getText());
 				int TimeSlice = Integer.parseInt(TextInputTimeSlice.getText());
+				dispose();
 				new Input(ProcessCount, TimeSlice);
 			}
 		});
