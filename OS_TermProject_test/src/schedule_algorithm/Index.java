@@ -11,6 +11,7 @@ public class Index extends JFrame{
 	
 	public static void main(String[] args) {
 		Index index = new Index();
-		int i;
+		int i=0;
+		System.out.println(i);
 	}
 }
