@@ -53,5 +53,6 @@ public class Input extends JFrame{
 		getContentPane().add(LabelRunningTime);
 				
 		getContentPane().add(ButtonInputComplete);
+		//Hello
 	}
 }
