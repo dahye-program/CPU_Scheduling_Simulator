@@ -3,6 +3,8 @@ package schedule_algorithm;
 import java.awt.Container;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Input extends JFrame{
 	
@@ -38,11 +40,38 @@ public class Input extends JFrame{
 		getContentPane().add(LabelPriority);
 		
 		getContentPane().add(InputComplete);
+		InputComplete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// fsda
+				// fads
+			}
+		});
 		
-		JTextField[] textField = new JTextField[1];
-		textField[1].setBounds(10, 51, 116, 21);
-		getContentPane().add(textField[1]);
-		textField[1].setColumns(10);
-				
+		JTextField[] TextPID = new JTextField[ProcessCount];
+		JTextField[] TextArrivalTime = new JTextField[ProcessCount];
+		JTextField[] TextRunningTime = new JTextField[ProcessCount];
+		JTextField[] TextPriority = new JTextField[ProcessCount];
+		
+		for(int i=0;i<ProcessCount;i++) {
+			TextPID[i] = new JTextField();
+			TextArrivalTime[i] = new JTextField();
+			TextRunningTime[i] = new JTextField();
+			TextPriority[i] = new JTextField();
+			
+			TextPID[i].setBounds(10, 30+i*20, 100, 20);
+			TextArrivalTime[i].setBounds(120, 30+i*20, 60, 20);
+			TextRunningTime[i].setBounds(190, 30+i*20, 60, 20);
+			TextPriority[i].setBounds(260, 30+i*20, 60, 20);
+			
+			getContentPane().add(TextPID[i]);
+			getContentPane().add(TextArrivalTime[i]);
+			getContentPane().add(TextRunningTime[i]);
+			getContentPane().add(TextPriority[i]);
+			
+			TextPID[i].setColumns(10);
+			TextArrivalTime[i].setColumns(10);
+			TextRunningTime[i].setColumns(10);
+			TextPriority[i].setColumns(10);
+		}
 	}
 }
