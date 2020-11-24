@@ -19,6 +19,7 @@ public class Input extends JFrame{
 		Container c = getContentPane(); // 자유로운 layout
 		c.setLayout(null);				// 자유로운 layout
 		
+		
 		JLabel LabelPID = new JLabel("프로세스아이디");
 		JLabel LabelArrivalTime = new JLabel("도착시간");
 		JLabel LabelRunningTime = new JLabel("실행시간");
@@ -40,12 +41,7 @@ public class Input extends JFrame{
 		getContentPane().add(LabelPriority);
 		
 		getContentPane().add(InputComplete);
-		InputComplete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// fsda
-				// fads
-			}
-		});
+		
 		
 		JTextField[] TextPID = new JTextField[ProcessCount];
 		JTextField[] TextArrivalTime = new JTextField[ProcessCount];
@@ -73,5 +69,26 @@ public class Input extends JFrame{
 			TextRunningTime[i].setColumns(10);
 			TextPriority[i].setColumns(10);
 		}
+		
+		int a[] = new int[5];
+		
+		String PID[] = new String[ProcessCount];
+		int ArrivalTime[] = new int[ProcessCount];
+		int RunningTime[] = new int[ProcessCount];
+		int Priority[] = new int[ProcessCount];
+		
+		
+		
+		InputComplete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int i=0;i<ProcessCount;i++) {
+					PID[i] = TextPID[i].getText();
+					ArrivalTime[i] = Integer.parseInt(TextArrivalTime[i].getText());
+					RunningTime[i] = Integer.parseInt(TextRunningTime[i].getText());
+					Priority[i] = Integer.parseInt(TextPriority[i].getText());
+				}
+				new Ghantt(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);				
+			}
+		});
 	}
 }
