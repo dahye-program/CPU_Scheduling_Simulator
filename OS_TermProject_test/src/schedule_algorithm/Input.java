@@ -70,8 +70,6 @@ public class Input extends JFrame{
 			TextPriority[i].setColumns(10);
 		}
 		
-		int a[] = new int[5];
-		
 		String PID[] = new String[ProcessCount];
 		int ArrivalTime[] = new int[ProcessCount];
 		int RunningTime[] = new int[ProcessCount];
@@ -87,7 +85,8 @@ public class Input extends JFrame{
 					RunningTime[i] = Integer.parseInt(TextRunningTime[i].getText());
 					Priority[i] = Integer.parseInt(TextPriority[i].getText());
 				}
-				new Ghantt(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);				
+				
+				new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 			}
 		});
 	}
