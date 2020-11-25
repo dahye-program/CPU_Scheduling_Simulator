@@ -32,6 +32,9 @@ public class AlgorithmKangmin {
 		processCount = processCount+1;
 		test.add(ar);
 		
+		ar.FixArgument(0, 0, "test");
+		
+		
 		return test;
 	}
 }
