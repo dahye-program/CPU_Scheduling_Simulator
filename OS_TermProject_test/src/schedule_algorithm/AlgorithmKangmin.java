@@ -27,12 +27,18 @@ public class AlgorithmKangmin {
 	}
 	
 	Vector<ArgumentVector> FCFS() {
-		
+		int TotalArrivalTime = 0;
+		int TotalRunningTime = 0;
 		ArgumentVector ar = new ArgumentVector(1,1,"22");
+		
 		processCount = processCount+1;
 		test.add(ar);
 		
 		ar.FixArgument(0, 0, "test");
+		
+		test.add(ar);
+		
+		test.firstElement();
 		
 		
 		return test;

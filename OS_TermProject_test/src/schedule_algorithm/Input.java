@@ -13,7 +13,7 @@ public class Input extends JFrame{
 	public Input(int ProcessCount, int TimeSlice) {
 		
 		setTitle("Input");
-		setSize(450,500);
+		setSize(450,70+20*ProcessCount);
 		setVisible(true);
 		
 		Container c = getContentPane(); // 자유로운 layout
@@ -85,8 +85,9 @@ public class Input extends JFrame{
 					RunningTime[i] = Integer.parseInt(TextRunningTime[i].getText());
 					Priority[i] = Integer.parseInt(TextPriority[i].getText());
 				}
-				
-				new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
+				dispose();
+				new DrawGhanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime);
+				//new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 			}
 		});
 	}
