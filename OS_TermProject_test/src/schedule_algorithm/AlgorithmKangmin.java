@@ -3,44 +3,58 @@ package schedule_algorithm;
 import java.util.Vector;
 
 public class AlgorithmKangmin {
-	static int processCount;
-	private int[] arrivaltime;
+	int ProcessCount;
+	int TimeSlice;
+	int[] ArrivalTime;
+	int[] RunningTime;
+	int[] Priority;
+	String[] PID;
 	
-		
-	static Vector<ArgumentVector> test = new Vector<ArgumentVector>();
+	// 반환할 것들 만들어줌
+	 Vector<ArgumentVector> FCFSGhantt = new Vector<ArgumentVector>();
+	 Vector<ArgumentVector> RoundRobinGhantt = new Vector<ArgumentVector>();
+	 Vector<ArgumentVector> PreemptionGhantt = new Vector<ArgumentVector>();
 	
-	
-	public int[] getArrivaltime() {
-		return arrivaltime;
-	}
 
-	public void setArrivaltime(int[] arrivaltime) {
-		this.arrivaltime = arrivaltime;
-	}
-
-	public AlgorithmKangmin(int processCount, int timeSlice, String[] pID, int[] arrivalTime, int[] runningTime, int[] priority) {
+	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority) {
 		// TODO Auto-generated constructor stub
-		System.out.println(processCount);
-		this.arrivaltime = arrivalTime;
-		this.processCount = processCount;
-		
+		this.ProcessCount = ProcessCount;
+		this.TimeSlice = TimeSlice;
+		this.ArrivalTime = ArrivalTime;
+		this.RunningTime = RunningTime;
+		this.Priority = Priority;
+		this.PID = PID;
 	}
 	
 	Vector<ArgumentVector> FCFS() {
 		int TotalArrivalTime = 0;
 		int TotalRunningTime = 0;
-		ArgumentVector ar = new ArgumentVector(1,1,"22");
 		
-		processCount = processCount+1;
-		test.add(ar);
+		Vector<ArgumentVector> Temp = new Vector<ArgumentVector>();
 		
-		ar.FixArgument(0, 0, "test");
+		for(int i=0;i<ProcessCount;i++) {
+			Temp.add(new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i]));
+		}
 		
-		test.add(ar);
+		for(int i=0;i<ProcessCount;i++) {
+			TotalRunningTime = RunningTime[i];
+			
+			
+			
+		}
 		
-		test.firstElement();
+		FCFSGhantt = Temp;
 		
+		return FCFSGhantt;		
+	}
+	
+	Vector<ArgumentVector> RoundRobin(){
 		
-		return test;
+		return RoundRobinGhantt;
+	}
+	
+	Vector<ArgumentVector> Preemption(){
+		
+		return PreemptionGhantt;
 	}
 }

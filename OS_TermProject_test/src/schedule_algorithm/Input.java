@@ -86,7 +86,7 @@ public class Input extends JFrame{
 					Priority[i] = Integer.parseInt(TextPriority[i].getText());
 				}
 				dispose();
-				new DrawGhanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime);
+				new DrawGhanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 				//new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 			}
 		});
