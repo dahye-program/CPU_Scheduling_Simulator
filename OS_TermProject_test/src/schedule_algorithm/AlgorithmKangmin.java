@@ -1,5 +1,6 @@
 package schedule_algorithm;
 
+import java.awt.Color;
 import java.util.Vector;
 
 public class AlgorithmKangmin {
@@ -9,6 +10,7 @@ public class AlgorithmKangmin {
 	int[] RunningTime;
 	int[] Priority;
 	String[] PID;
+	Color[] color;
 	
 	int FCFSAWT;
 	int FCFSATT;
@@ -19,7 +21,7 @@ public class AlgorithmKangmin {
 	 Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
 	
 
-	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority) {
+	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
 		// TODO Auto-generated constructor stub
 		this.ProcessCount = ProcessCount;
 		this.TimeSlice = TimeSlice;
@@ -27,6 +29,7 @@ public class AlgorithmKangmin {
 		this.RunningTime = RunningTime;
 		this.Priority = Priority;
 		this.PID = PID;
+		this.color = color;
 	}
 	
 	Vector<ArgumentVector> FCFS() {
@@ -35,12 +38,12 @@ public class AlgorithmKangmin {
 		
 		
 		ArgumentVector[] FCFSReadyQueue = new ArgumentVector[ProcessCount];
-		
-		for(int i=0;i<ProcessCount;i++) {
-			FCFSReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i]);
+
+		for (int i = 0; i < ProcessCount; i++) {
+			FCFSReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
 		}
-		
-		ArgumentVector FCFSTemp = new ArgumentVector(0,0,"temp",0);
+
+		ArgumentVector FCFSTemp = new ArgumentVector(0, 0, "temp", 0, color[0]);
 		
 		for (int i = ProcessCount - 1; i > 0; i--) {
 			for (int j = 0; j < i; j++) {
@@ -70,10 +73,10 @@ public class AlgorithmKangmin {
 		ArgumentVector[] RRReadyQueue = new ArgumentVector[ProcessCount];
 
 		for (int i = 0; i < ProcessCount; i++) {
-			RRReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i]);
+			RRReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
 		}
 
-		ArgumentVector RRTemp = new ArgumentVector(0, 0, "temp", 0);
+		ArgumentVector RRTemp = new ArgumentVector(0, 0, "temp", 0, color[0]);
 
 		for (int i = ProcessCount - 1; i > 0; i--) {
 			for (int j = 0; j < i; j++) {

@@ -13,18 +13,19 @@ public class ArgumentVector {
 	int ResponTime;
 	public Color color;
 	
-	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority) {
+	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority, Color color) {
 		this.ArrivalTime = ArrivalTime;
 		this.RunningTime = RunningTime;
 		this.PID = PID;
 		this.Priority = Priority;
 		
 		
-		Random rand = new Random();
-		float r = rand.nextFloat() / 2f + (float)0.5;
-		float g = rand.nextFloat() / 2f + (float)0.5;
-		float b = rand.nextFloat() / 2f + (float)0.5;
-		color = new Color(r, g, b);
+//		Random rand = new Random();
+//		float r = rand.nextFloat() / 2f + (float)0.5;
+//		float g = rand.nextFloat() / 2f + (float)0.5;
+//		float b = rand.nextFloat() / 2f + (float)0.5;
+//		color = new Color(r, g, b);
+		this.color = color;
 	}
 	
 	public void ReSet(int StartTime, int RunningTime, String PID, int Priority) {
@@ -59,6 +60,6 @@ public class ArgumentVector {
 	}
 	
 	public ArgumentVector clone() {
-		return new ArgumentVector(this.ArrivalTime, this.RunningTime, this.PID, this.Priority);
+		return new ArgumentVector(this.ArrivalTime, this.RunningTime, this.PID, this.Priority, this.color);
 	}
 }
