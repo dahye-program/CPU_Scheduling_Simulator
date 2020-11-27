@@ -1,5 +1,6 @@
 package schedule_algorithm;
 
+import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.*;
@@ -74,7 +75,7 @@ public class Input extends JFrame{
 		int ArrivalTime[] = new int[ProcessCount];
 		int RunningTime[] = new int[ProcessCount];
 		int Priority[] = new int[ProcessCount];
-		
+		Color color = new Color(TimeSlice);
 		
 		
 		InputComplete.addActionListener(new ActionListener() {
@@ -86,7 +87,7 @@ public class Input extends JFrame{
 					Priority[i] = Integer.parseInt(TextPriority[i].getText());
 				}
 				dispose();
-				new DrawGhanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
+				new DrawGanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 				//new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 			}
 		});

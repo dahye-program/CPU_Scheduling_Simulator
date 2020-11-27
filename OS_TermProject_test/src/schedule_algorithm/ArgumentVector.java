@@ -1,30 +1,41 @@
 package schedule_algorithm;
 
+import java.awt.Color;
+import java.util.Random;
+
 public class ArgumentVector {
-	int StartTime;
+	int ArrivalTime;
 	int RunningTime;
 	String PID;
+	int Priority;
+	int WaitTime;
+	int ReturnTime;
+	int ResponTime;
+	public Color color;
 	
-	public ArgumentVector(int ArrivalTime, int RunningTime, String PID) {
-		this.StartTime = ArrivalTime;
+	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority) {
+		this.ArrivalTime = ArrivalTime;
 		this.RunningTime = RunningTime;
 		this.PID = PID;
+		this.Priority = Priority;
+		
+		
+		Random rand = new Random();
+		float r = rand.nextFloat() / 2f + (float)0.5;
+		float g = rand.nextFloat() / 2f + (float)0.5;
+		float b = rand.nextFloat() / 2f + (float)0.5;
+		color = new Color(r, g, b);
 	}
 	
-	public void FixArgument(int StartTime, int RunningTime, String PID) {
-		this.StartTime = StartTime;
+	public void ReSet(int StartTime, int RunningTime, String PID, int Priority) {
+		this.ArrivalTime = StartTime;
 		this.RunningTime = RunningTime;
 		this.PID = PID;
-	}
-	
-	void ReSet(int StartTime, int RunningTime, String PID) {
-		this.StartTime = StartTime;
-		this.RunningTime = RunningTime;
-		this.PID = PID;
+		this.Priority = Priority;
 	}
 	
 	int ReturnArrivalTime() {
-		return StartTime;
+		return ArrivalTime;
 	}
 	
 	int ReturnRunningTime() {
@@ -33,5 +44,13 @@ public class ArgumentVector {
 	
 	String ReturnPID() {
 		return PID;
+	}
+	
+	int ReturnPriority() {
+		return Priority;
+	}
+	
+	Color ReturnColor() {
+		return color;
 	}
 }
