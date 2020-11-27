@@ -23,12 +23,14 @@ public class DrawGanttChart extends JFrame{
 		}
 		
 		AlgorithmKangmin kangmin = new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
+		
+		
 		FCFSGantt = kangmin.FCFS();
-		//RoundRobinGhantt = kangmin.RoundRobin();
-		//PreemptionGhantt = kangmin.Preemption();
+		RoundRobinGantt = kangmin.RoundRobin();
+		//PreemptionGantt = kangmin.Preemption();
 		
 				
-		System.out.println(TotalRunningTime);
+		//System.out.println(RoundRobinGantt.size());
 		
 		// 여기서부터 GUI 영역
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,7 +49,7 @@ public class DrawGanttChart extends JFrame{
 		
 		
 		LabelFCFS.setBounds(10, 80, 100, 20);
-		
+	
 		
 		getContentPane().add(LabelFCFS);
 		
@@ -66,9 +68,11 @@ public class DrawGanttChart extends JFrame{
 		
 				
 		Canvas[] FCFS = new Canvas[ProcessCount];
+		Canvas[] RoundRobin = new Canvas[RoundRobinGantt.size()];
+		
+		//System.out.println(RoundRobinGantt.size());
 		
 		int FCFSTemp = 0;
-		
 		for (int i = 0; i < ProcessCount; i++) {
 			FCFS[i] = new Canvas();
 			FCFS[i].setBackground(FCFSGantt.get(i).ReturnColor());
@@ -77,6 +81,16 @@ public class DrawGanttChart extends JFrame{
 			getContentPane().add(FCFS[i]);
 		}
 		
+		int RoundRobinTemp = 0;
+		//getContentPane().repaint();
+		for(int i=0;i<RoundRobinGantt.size();i++) {
+			//System.out.println(RoundRobinGantt.get(i).ReturnRunningTime());
+			RoundRobin[i] = new Canvas();
+			RoundRobin[i].setBackground(RoundRobinGantt.get(i).ReturnColor());
+			RoundRobin[i].setBounds(10+RoundRobinTemp, 250, RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+			RoundRobinTemp += (RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX);
+			getContentPane().add(RoundRobin[i]);
+		}
 		
 	}
 }

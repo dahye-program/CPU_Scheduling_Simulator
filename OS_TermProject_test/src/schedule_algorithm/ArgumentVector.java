@@ -34,6 +34,10 @@ public class ArgumentVector {
 		this.Priority = Priority;
 	}
 	
+	void SetRunningTime(int RunningTime) {
+		this.RunningTime = RunningTime;
+	}
+	
 	int ReturnArrivalTime() {
 		return ArrivalTime;
 	}
@@ -52,5 +56,9 @@ public class ArgumentVector {
 	
 	Color ReturnColor() {
 		return color;
+	}
+	
+	public ArgumentVector clone() {
+		return new ArgumentVector(this.ArrivalTime, this.RunningTime, this.PID, this.Priority);
 	}
 }
