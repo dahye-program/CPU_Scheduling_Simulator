@@ -38,6 +38,10 @@ public class ArgumentVector {
 		this.RunningTime = RunningTime;
 	}
 	
+	int GetRunningTime() {
+		return RunningTime;
+	}
+	
 	int ReturnArrivalTime() {
 		return ArrivalTime;
 	}

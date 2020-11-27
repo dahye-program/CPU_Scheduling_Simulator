@@ -16,6 +16,11 @@ public class DrawGanttChart extends JFrame{
 		Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
 		Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
 		
+		Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
+		Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
+		Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
+		Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
+		
 		int TotalRunningTime = 0;
 		
 		for(int i=0;i<ProcessCount;i++) {
@@ -23,12 +28,17 @@ public class DrawGanttChart extends JFrame{
 		}
 		
 		AlgorithmKangmin kangmin = new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
-		
+		AlgorithmDahye dahye = new AlgorithmDahye(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 		
 		FCFSGantt = kangmin.FCFS();
 		RoundRobinGantt = kangmin.RoundRobin();
 		//PreemptionGantt = kangmin.Preemption();
 		
+		// Dahye Code
+		SJFGantt = dahye.SJF();
+		HRNGantt = dahye.HRN();
+		SRTGantt = dahye.SRT();
+		NonPreemptionGantt = dahye.NonPreemption();
 				
 		//System.out.println(RoundRobinGantt.size());
 		
@@ -92,5 +102,6 @@ public class DrawGanttChart extends JFrame{
 			getContentPane().add(RoundRobin[i]);
 		}
 		
+		int SJFTemp = 0;
 	}
 }
