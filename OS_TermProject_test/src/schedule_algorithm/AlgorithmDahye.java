@@ -62,6 +62,7 @@ public class AlgorithmDahye {
 		for(int i=0;i<ProcessCount;i++) {
 			SJFGantt.add(SJFReadyQueue[i]);
 		}
+		// ³» Çª½¬ ¾îµð°¬¾î~
 		 
 		return SJFGantt;
 	}
