@@ -1,8 +1,5 @@
 package schedule_algorithm;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Vector;
 
 public class AlgorithmDahye {
@@ -45,7 +42,7 @@ public class AlgorithmDahye {
 			}
 		 
 		 // 2번째 프로세스부터 작업 시간 짧은 순으로 정렬 -> 작업 시간 오름차순
-		 for(int i=1;i<ProcessCount-1;i++) {
+		 for(int i=1;i<ProcessCount;i++) {
 			 if(SJFReadyQueue[i].GetRunningTime() > SJFReadyQueue[i+1].GetRunningTime()) {
 				 temp = SJFReadyQueue[i];
 				 SJFReadyQueue[i] = SJFReadyQueue[i+1];
