@@ -30,14 +30,14 @@ public class DrawGanttChart extends JFrame{
       }
       
       AlgorithmKangmin kangmin = new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority, color);
-     // AlgorithmDahye dahye = new AlgorithmDahye(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority, color);
+      AlgorithmDahye dahye = new AlgorithmDahye(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority, color);
       
       FCFSGantt = kangmin.FCFS();
       RoundRobinGantt = kangmin.RoundRobin();
       PreemptionGantt = kangmin.Preemption();
       
       // Dahye Code
-     // SJFGantt = dahye.SJF();
+      SJFGantt = dahye.SJF();
      // HRNGantt = dahye.HRN();
      // SRTGantt = dahye.SRT();
      // NonPreemptionGantt = dahye.NonPreemption();
@@ -96,7 +96,7 @@ public class DrawGanttChart extends JFrame{
       Canvas[] Preemption = new Canvas[PreemptionGantt.size()];
       
       //Canvas[] SRT = new Canvas[SRTGantt.size()];
-      //Canvas[] SJT = new Canvas[SJTGantt.size()];
+      Canvas[] SJF = new Canvas[SJFGantt.size()];
       //Canvas[] HRN = new Canvas[HRNGantt.size()];
       //Canvas[] NPP = new Canvas[NPPGantt.size()];
       
@@ -188,6 +188,13 @@ public class DrawGanttChart extends JFrame{
       
       
       int SJFTemp = 0;
+      for(int i=0;i<SJFGantt.size();i++) {
+    	  SJF[i] = new Canvas();
+    	  SJF[i].setBackground(SJFGantt.get(i).ReturnColor());
+    	  SJF[i].setBounds(10+SJFTemp, 600, SJFGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+    	  SJFTemp += (SJFGantt.get(i).ReturnRunningTime()*STANDARDPX);
+    	  getContentPane().add(SJF[i]);
+      }
       
       //평균대기시간 평균반환시간 계산
       FCFSTotalWaitingTime = FCFSTotalWaitingTime / (double)ProcessCount;
