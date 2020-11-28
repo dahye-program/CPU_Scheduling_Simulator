@@ -202,5 +202,14 @@ public class DrawGanttChart extends JFrame{
       LabelFCFSATT.setBounds(10, 260, 300, 20);
       getContentPane().add(LabelFCFSAWT);
       getContentPane().add(LabelFCFSATT);
+      
+      RRATT = kangmin.ReturnRRReturnTime() / (double)ProcessCount;
+      RRAWT = kangmin.ReturnRRWainttime() / (double)ProcessCount;
+      JLabel LabelRRAWT = new JLabel("평균 대기 시간 : " + RRAWT);
+      JLabel LabelRRATT = new JLabel("평균 반환 시간 : " + RRATT);
+      LabelRRAWT.setBounds(10, 340, 300, 20);
+      LabelRRATT.setBounds(10, 360, 300, 20);
+      getContentPane().add(LabelRRAWT);
+      getContentPane().add(LabelRRATT);
    }
 }

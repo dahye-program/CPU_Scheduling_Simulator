@@ -13,6 +13,7 @@ public class AlgorithmKangmin {
 	String[] PID;
 	Color[] color;
 	
+	double RRTotalRunningTime = 0;
 	double RRTotalWaitingTime = 0;
 	double RRTotalReturnTime = 0;
 	double PPTotalWatingTime = 0;
@@ -94,9 +95,10 @@ public class AlgorithmKangmin {
 
 		boolean isComplete = false;
 		int TempRunningTime;
+		double totalRunnigTime = 0;
+		int tempLoop = 0;
 
 		int RRLoop = 0;
-		int j=0;
 
 		while (true) {
 			isComplete = false;
@@ -125,6 +127,16 @@ public class AlgorithmKangmin {
 					// RRReadyQueue[RRLoop].RunningTime = TempRunningTime - TimeSlice;
 					RRReadyQueue[RRLoop].SetRunningTime(TempRunningTime - TimeSlice);	//여기서 수정하면서 위에 add한것도 같이 수정됨
 				}
+				
+				///////////// 평균 반환, 대기 시간 구하려는거///////////////////
+				totalRunnigTime += RoundRobinGantt.get(tempLoop).RunningTime;
+				if(RRReadyQueue[RRLoop].ReturnRunningTime()==0) {
+					RRReadyQueue[RRLoop].SetReturnTime(totalRunnigTime);
+				}
+				
+				
+				tempLoop++;
+				//////////////////////////////////////////////////////
 			}
 			// System.out.println(RRLoop);
 			RRLoop++;
@@ -132,6 +144,25 @@ public class AlgorithmKangmin {
 				RRLoop = 0;
 			}
 		}
+		
+		//////////// 평균 반환 대기시간 구하는거//////////////
+		for(int j=0;j<RRReadyQueue.length;j++) {
+			RRTotalReturnTime += RRReadyQueue[j].ReturnTime;
+		}
+		for(int j=0;j<RoundRobinGantt.size();j++) {
+			for(int k=0;k<RRReadyQueue.length;k++) {
+				if(RoundRobinGantt.get(j).PID==RRReadyQueue[k].PID) {
+					RRReadyQueue[k].SetWaitingTime(RRTotalRunningTime-(double)RRReadyQueue[k].ArrivalTime);
+					RRReadyQueue[k].ArrivalTime = (int) RRTotalRunningTime; // 여기 문제생길수도 있는 코드
+					RRTotalRunningTime += (double)RoundRobinGantt.get(j).RunningTime;
+				}
+			}
+		}
+		for(int j=0;j<RRReadyQueue.length;j++) {
+			RRTotalWaitingTime +=RRReadyQueue[j].WaitingTime;
+		}
+		//////////////////////////////////////////////
+		
 		// System.out.println(RoundRobinGantt.size());
 		return RoundRobinGantt;
 	}
@@ -200,5 +231,13 @@ public class AlgorithmKangmin {
 		}
 		
 		return PreemptionGantt;
+	}
+	
+	double ReturnRRReturnTime() {
+		return RRTotalReturnTime;
+	}
+	
+	double ReturnRRWainttime() {
+		return RRTotalWaitingTime;
 	}
 }
