@@ -64,6 +64,13 @@ public class DrawGanttChart extends JFrame{
       
       JLabel[] LabelPID = new JLabel[ProcessCount];
       JLabel[] LabelRunningAndArrivalTime = new JLabel[ProcessCount];
+      JLabel[] LabelFCFSSecond = new JLabel[PreemptionGantt.size()];
+      JLabel[] LabelRRSecond = new JLabel[PreemptionGantt.size()];
+      JLabel[] LabelPPSecond = new JLabel[PreemptionGantt.size()];
+      JLabel[] LabelSRTSecond = new JLabel[PreemptionGantt.size()];
+      JLabel[] LabelSJFSecond = new JLabel[PreemptionGantt.size()];
+      JLabel[] LabelHRNSecond = new JLabel[PreemptionGantt.size()];
+      JLabel[] LabelNPPSecond = new JLabel[PreemptionGantt.size()];
       
       
       LabelFCFS.setBounds(10, 180, 150, 20);
@@ -92,6 +99,39 @@ public class DrawGanttChart extends JFrame{
       //Canvas[] SJT = new Canvas[SJTGantt.size()];
       //Canvas[] HRN = new Canvas[HRNGantt.size()];
       //Canvas[] NPP = new Canvas[NPPGantt.size()];
+      
+      int secondTemp = 0;
+      int second = 1;
+      for(int i=0;i<PreemptionGantt.size();i++) {
+    	  LabelFCFSSecond[i] = new JLabel(second+"");
+    	  LabelRRSecond[i] = new JLabel(second+"");
+    	  LabelPPSecond[i] = new JLabel(second+"");
+    	  LabelSRTSecond[i] = new JLabel(second+"");
+    	  LabelSJFSecond[i] = new JLabel(second+"");
+    	  LabelHRNSecond[i] = new JLabel(second+"");
+    	  LabelNPPSecond[i] = new JLabel(second+"");
+    	  
+    	  LabelFCFSSecond[i].setBounds(35+secondTemp,230, 20, 10);
+    	  LabelRRSecond[i].setBounds(35+secondTemp,330, 20, 10);
+    	  LabelPPSecond[i].setBounds(35+secondTemp,430, 20, 10);
+    	  LabelSRTSecond[i].setBounds(35+secondTemp,530, 20, 10);
+    	  LabelSJFSecond[i].setBounds(35+secondTemp,630, 20, 10);
+    	  LabelHRNSecond[i].setBounds(35+secondTemp,730, 20, 10);
+    	  LabelNPPSecond[i].setBounds(35+secondTemp,830, 20, 10);
+    	  
+    	  getContentPane().add(LabelFCFSSecond[i]);
+    	  getContentPane().add(LabelRRSecond[i]);
+    	  getContentPane().add(LabelPPSecond[i]);
+    	  getContentPane().add(LabelSRTSecond[i]);
+    	  getContentPane().add(LabelSJFSecond[i]);
+    	  getContentPane().add(LabelHRNSecond[i]);
+    	  getContentPane().add(LabelNPPSecond[i]);
+    	  
+    	  second++;
+    	  
+    	  secondTemp+=STANDARDPX;
+      }
+      
       
       int notifyTemp = 0;
       for(int i=0;i<ProcessCount;i++) {

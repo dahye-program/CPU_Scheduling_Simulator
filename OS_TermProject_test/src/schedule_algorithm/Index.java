@@ -24,7 +24,9 @@ public class Index extends JFrame{
 		
 		
 		// 선언 부분
-		
+		JLabel LabelTitle = new JLabel("CPU 스케줄링 알고리즘");
+		JLabel LabelInfoKang = new JLabel("20164143 박강민");
+		JLabel LabelInfoYang = new JLabel("20184026 양다혜");
 		JLabel LabelProcessCount = new JLabel("프로세스 개수 입력 : "); 	// 프로세스 입력 라벨
 		JLabel LabelTimeSlice = new JLabel("타임슬라이스 입력  : ");
 		
@@ -37,6 +39,9 @@ public class Index extends JFrame{
 		
 		
 		// 위치 지정 부분
+		LabelTitle.setBounds(10,0,130,30);
+		LabelInfoKang.setBounds(10,30,130,30);
+		LabelInfoYang.setBounds(10,50,130,30);
 		LabelProcessCount.setBounds(10, 100, 130, 30);
 		LabelTimeSlice.setBounds(10, 150, 130, 30);
 		
@@ -45,6 +50,9 @@ public class Index extends JFrame{
 		
 		
 		//실제 생성 부분
+		getContentPane().add(LabelTitle);
+		getContentPane().add(LabelInfoKang);
+		getContentPane().add(LabelInfoYang);
 		getContentPane().add(LabelProcessCount);
 		getContentPane().add(LabelTimeSlice);
 		

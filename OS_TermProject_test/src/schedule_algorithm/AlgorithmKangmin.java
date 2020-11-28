@@ -13,8 +13,11 @@ public class AlgorithmKangmin {
 	String[] PID;
 	Color[] color;
 	
-	int FCFSAWT;
-	int FCFSATT;
+	double RRTotalWaitingTime = 0;
+	double RRTotalReturnTime = 0;
+	double PPTotalWatingTime = 0;
+	double PPTotalReturnTime = 0;
+	
 	
 	// 반환할 것들 만들어줌
 	 Vector<ArgumentVector> FCFSGantt = new Vector<ArgumentVector>();
