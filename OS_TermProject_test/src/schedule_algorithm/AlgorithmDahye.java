@@ -1,5 +1,6 @@
 package schedule_algorithm;
 
+import java.awt.Color;
 import java.util.Vector;
 
 public class AlgorithmDahye {
@@ -9,6 +10,7 @@ public class AlgorithmDahye {
 	int[] RunningTime;
 	int[] Priority;
 	String[] PID;
+	Color[] color;
 	
 	// 반환할 것들 만들어줌
 	 Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
@@ -16,7 +18,7 @@ public class AlgorithmDahye {
 	 Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
 	
-	 public AlgorithmDahye(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority) {
+	 public AlgorithmDahye(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
 			// TODO Auto-generated constructor stub
 			this.ProcessCount = ProcessCount;
 			this.TimeSlice = TimeSlice;
@@ -24,6 +26,7 @@ public class AlgorithmDahye {
 			this.RunningTime = RunningTime;
 			this.Priority = Priority;
 			this.PID = PID;
+			this.color = color;
 		}
 	 
 	 Vector<ArgumentVector> SJF(){
@@ -32,12 +35,11 @@ public class AlgorithmDahye {
 		 ArgumentVector[] SJFReadyQueue = new ArgumentVector[ProcessCount];	
 		 
 		 for(int i=0;i<ProcessCount;i++) {
-				SJFReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i]);
+				SJFReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i],color[i]);
 			}
 		 
 		 // TODO: 처음으로 들어온 프로세스가 첫번째 실행 -> 도착 순서 최소값
 		 for(int i=0;i<ProcessCount;i++) {
-				//도착 시간이 0인걸 먼저 해야될거아냐 ㅅㅂ 조깥네
 			
 			}
 		 
@@ -47,11 +49,11 @@ public class AlgorithmDahye {
 				 temp = SJFReadyQueue[i];
 				 SJFReadyQueue[i] = SJFReadyQueue[i+1];
 				 SJFReadyQueue[i+1] = temp;
-				 //ㅅㅂ도착시간 고려안해?
+				 //도착시간 고려해야지
 			 }
 		 }
 
-		ArgumentVector SJFTemp = new ArgumentVector(0,0,"temp",0);
+		ArgumentVector SJFTemp = new ArgumentVector(0,0,"temp",0,color[0]);
 		
 		for(int i=0;i<ProcessCount;i++) {
 			SJFReadyQueue[i].WaitTime = totalWaitingTime - SJFReadyQueue[i].ArrivalTime;
@@ -62,7 +64,6 @@ public class AlgorithmDahye {
 		for(int i=0;i<ProcessCount;i++) {
 			SJFGantt.add(SJFReadyQueue[i]);
 		}
-		// 내 푸쉬 어디갔어 ㅅㅂ????
 		 
 		return SJFGantt;
 	}
