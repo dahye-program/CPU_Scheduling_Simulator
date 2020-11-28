@@ -149,9 +149,9 @@ public class AlgorithmKangmin {
 		for(int i = ProcessCount-1; i>0;i--) {
 			for(int j=0;j<i;j++) {
 				if(PPReadyQueue[j].ReturnArrivalTime()>PPReadyQueue[j+1].ReturnArrivalTime()) {
-					PPTemp = PPReadyQueue[j];
-					PPReadyQueue[j] = PPReadyQueue[j+1];
-					PPReadyQueue[j+1] = PPTemp;
+					PPTemp = PPReadyQueue[j].clone();
+					PPReadyQueue[j] = PPReadyQueue[j+1].clone();
+					PPReadyQueue[j+1] = PPTemp.clone();
 				}
 			}
 		}
@@ -164,39 +164,39 @@ public class AlgorithmKangmin {
 		int currentIndex;
 		int tempRunningTime;
 		
-		while(true) {
-			
+		while (true) {
+
 			isComplete = false;
-			currentIndex=0;
-			
-			for(int i=0;i<ProcessCount;i++) {
-				if(PPReadyQueue[i].RunningTime>0) {
-					isComplete=true;
+			currentIndex = 0;
+
+			for (int i = 0; i < ProcessCount; i++) {
+				if (PPReadyQueue[i].RunningTime > 0) {
+					isComplete = true;
 				}
 			}
-			
+
 			if (!isComplete)
 				break;
-			
+
 			PPTemp.ReSet(10000, 0, null, 10000);
-			
-			for(PPLoop=0;PPLoop<ProcessCount;PPLoop++) {
-				if(currentRunningTime>=PPReadyQueue[PPLoop].ArrivalTime && PPReadyQueue[PPLoop].RunningTime>0) {
-					if(PPTemp.Priority>PPReadyQueue[PPLoop].Priority) {
+
+			for (PPLoop = 0; PPLoop < ProcessCount; PPLoop++) {
+				if (currentRunningTime >= PPReadyQueue[PPLoop].ArrivalTime && PPReadyQueue[PPLoop].RunningTime > 0) {
+					if (PPTemp.Priority > PPReadyQueue[PPLoop].Priority) {
 						PPTemp = PPReadyQueue[PPLoop].clone();
 						currentIndex = PPLoop;
 					}
 				}
 			}
 			
-			if(PPTemp.ArrivalTime<=currentRunningTime) {			
+			if (PPTemp.ArrivalTime <= currentRunningTime) {
 				tempRunningTime = PPTemp.ReturnRunningTime();
 				PPTemp.SetRunningTime(1);
 				PreemptionGantt.add(PPTemp.clone());
-				PPTemp.SetRunningTime(tempRunningTime-1);
+				PPTemp.SetRunningTime(tempRunningTime - 1);
 				PPReadyQueue[currentIndex] = PPTemp.clone();
 			}
-			currentRunningTime++;			
+			currentRunningTime++;
 		}
 		
 		return PreemptionGantt;

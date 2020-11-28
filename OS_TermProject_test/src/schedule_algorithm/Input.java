@@ -11,7 +11,10 @@ import java.util.Random;
 
 public class Input extends JFrame{
 	
-	
+	double RRAWT = 0;
+	double RRATT = 0;
+	double PPAWT = 0;
+	double PPATT = 0;
 	
 	public Input(int ProcessCount, int TimeSlice) {
 		

@@ -10,7 +10,7 @@ public class ArgumentVector {
 	int Priority;
 	int WaitingTime;
 	int ReturnTime;
-	int ResponTime;
+	int RespawnTime;
 	public Color color;
 	
 	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority, Color color) {
@@ -41,6 +41,10 @@ public class ArgumentVector {
 	
 	void SetWaitingTime(int WaitingTime) {
 		this.WaitingTime = WaitingTime;
+	}
+	
+	void SetRespawnTime (int SpawnTime) {
+		this.RespawnTime = SpawnTime;
 	}
 	
 	int GetRunningTime() {
