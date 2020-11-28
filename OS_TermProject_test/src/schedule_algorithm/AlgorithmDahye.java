@@ -38,28 +38,33 @@ public class AlgorithmDahye {
 				SJFReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i],color[i]);
 			}
 		 
-		 // TODO: 처음으로 들어온 프로세스가 첫번째 실행 -> 도착 순서 최소값
-		 for(int i=0;i<ProcessCount;i++) {
-			
+		 ArgumentVector SJFTemp = new ArgumentVector(0,0,"temp",0,color[0]);
+		 // 도착 시간 순서대로 정렬
+		 for (int i = ProcessCount - 1; i > 0; i--) {
+				for (int j = 0; j < i; j++) {
+					if (SJFReadyQueue[j].ReturnArrivalTime() > SJFReadyQueue[j + 1].ReturnArrivalTime()) {
+						SJFTemp = SJFReadyQueue[j];
+						SJFReadyQueue[j] = SJFReadyQueue[j + 1];
+						SJFReadyQueue[j + 1] = SJFTemp;
+					}
+				}
 			}
-		 
+		 //첫번째로 도착한 프로세스 제외하고 
 		 // 2번째 프로세스부터 작업 시간 짧은 순으로 정렬 -> 작업 시간 오름차순
-		 for(int i=1;i<ProcessCount;i++) {
-			 if(SJFReadyQueue[i].GetRunningTime() > SJFReadyQueue[i+1].GetRunningTime()) {
-				 temp = SJFReadyQueue[i];
-				 SJFReadyQueue[i] = SJFReadyQueue[i+1];
-				 SJFReadyQueue[i+1] = temp;
-				 //도착시간 고려해야지
-			 }
-		 }
-
-		ArgumentVector SJFTemp = new ArgumentVector(0,0,"temp",0,color[0]);
+		 for (int i = 1; i < ProcessCount-1 ; i++) {
+					if (SJFReadyQueue[i].GetRunningTime() > SJFReadyQueue[i + 1].GetRunningTime()) {
+						SJFTemp = SJFReadyQueue[i];
+						SJFReadyQueue[i] = SJFReadyQueue[i + 1];
+						SJFReadyQueue[i + 1] = SJFTemp;
+					}
+			}
 		
 		for(int i=0;i<ProcessCount;i++) {
-			SJFReadyQueue[i].WaitTime = totalWaitingTime - SJFReadyQueue[i].ArrivalTime;
+			SJFReadyQueue[i].WaitingTime = totalWaitingTime - SJFReadyQueue[i].ArrivalTime;
 			totalWaitingTime+=SJFReadyQueue[i].RunningTime;
 			SJFReadyQueue[i].ReturnTime = totalWaitingTime;
 			}
+		
 			
 		for(int i=0;i<ProcessCount;i++) {
 			SJFGantt.add(SJFReadyQueue[i]);
