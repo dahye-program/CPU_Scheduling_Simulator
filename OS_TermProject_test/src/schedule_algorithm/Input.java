@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import java.util.Random;
+
 public class Input extends JFrame{
 	
 	
@@ -75,7 +77,9 @@ public class Input extends JFrame{
 		int ArrivalTime[] = new int[ProcessCount];
 		int RunningTime[] = new int[ProcessCount];
 		int Priority[] = new int[ProcessCount];
-		Color color = new Color(TimeSlice);
+		Color color[] = new Color[ProcessCount];
+		
+		Random rand = new Random();
 		
 		
 		InputComplete.addActionListener(new ActionListener() {
@@ -85,9 +89,13 @@ public class Input extends JFrame{
 					ArrivalTime[i] = Integer.parseInt(TextArrivalTime[i].getText());
 					RunningTime[i] = Integer.parseInt(TextRunningTime[i].getText());
 					Priority[i] = Integer.parseInt(TextPriority[i].getText());
+					float r = rand.nextFloat() / 2f + (float)0.5;
+					float g = rand.nextFloat() / 2f + (float)0.5;
+					float b = rand.nextFloat() / 2f + (float)0.5;
+					color[i] = new Color(r,g,b);
 				}
 				dispose();
-				new DrawGanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
+				new DrawGanttChart(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority, color);
 				//new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
 			}
 		});
