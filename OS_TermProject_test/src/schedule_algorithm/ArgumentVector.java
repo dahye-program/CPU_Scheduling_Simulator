@@ -8,7 +8,7 @@ public class ArgumentVector {
 	int RunningTime;
 	String PID;
 	int Priority;
-	int WaitTime;
+	int WaitingTime;
 	int ReturnTime;
 	int ResponTime;
 	public Color color;
@@ -37,6 +37,10 @@ public class ArgumentVector {
 	
 	void SetRunningTime(int RunningTime) {
 		this.RunningTime = RunningTime;
+	}
+	
+	void SetWaitingTime(int WaitingTime) {
+		this.WaitingTime = WaitingTime;
 	}
 	
 	int GetRunningTime() {

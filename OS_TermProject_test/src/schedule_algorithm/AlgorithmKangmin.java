@@ -133,6 +133,17 @@ public class AlgorithmKangmin {
 	}
 	
 	Vector<ArgumentVector> Preemption(){
+		ArgumentVector[] PPReadyQueue = new ArgumentVector[ProcessCount];
+		for(int i=0;i<ProcessCount;i++) {
+			PPReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+		}
+		
+		for(int i = ProcessCount-1; i>0;i--) {
+			for(int j=0;j<i;j++) {
+				//if(PPReadyQueue[j])
+			}
+		}
+		
 		
 		return PreemptionGantt;
 	}

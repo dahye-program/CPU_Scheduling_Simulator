@@ -22,6 +22,8 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       int TotalRunningTime = 0;
+      double FCFSTotalWaitingTime = 0;
+      double FCFSTotalReturnTime = 0;
       
       for(int i=0;i<ProcessCount;i++) {
          TotalRunningTime += RunningTime[i];
@@ -59,9 +61,13 @@ public class DrawGanttChart extends JFrame{
       
       
       LabelFCFS.setBounds(10, 80, 100, 20);
+      LabelRR.setBounds(10,180,150,20);
+      LabelPP.setBounds(10,280,100,20);
    
       
       getContentPane().add(LabelFCFS);
+      getContentPane().add(LabelRR);
+      getContentPane().add(LabelPP);
       
       
       
@@ -88,6 +94,7 @@ public class DrawGanttChart extends JFrame{
          FCFS[i].setBackground(FCFSGantt.get(i).ReturnColor());
          FCFS[i].setBounds(10 + FCFSTemp, 100, FCFSGantt.get(i).ReturnRunningTime() * STANDARDPX, STANDARDPX);
          FCFSTemp += (FCFSGantt.get(i).ReturnRunningTime() * STANDARDPX);
+         //FCFSGantt.get(i).SetWaitingTime(WaitingTime);
          getContentPane().add(FCFS[i]);
       }
       
@@ -97,7 +104,7 @@ public class DrawGanttChart extends JFrame{
          //System.out.println(RoundRobinGantt.get(i).ReturnRunningTime());
          RoundRobin[i] = new Canvas();
          RoundRobin[i].setBackground(RoundRobinGantt.get(i).ReturnColor());
-         RoundRobin[i].setBounds(10+RoundRobinTemp, 250, RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+         RoundRobin[i].setBounds(10+RoundRobinTemp, 200, RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
          RoundRobinTemp += (RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX);
          getContentPane().add(RoundRobin[i]);
       }
