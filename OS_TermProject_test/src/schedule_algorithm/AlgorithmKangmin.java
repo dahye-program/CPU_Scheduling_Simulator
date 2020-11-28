@@ -108,7 +108,7 @@ public class AlgorithmKangmin {
 
 			if (RRReadyQueue[RRLoop].ReturnRunningTime() > 0) {
 				if (RRReadyQueue[RRLoop].ReturnRunningTime() < TimeSlice) {
-					RoundRobinGantt.add(RRReadyQueue[RRLoop]);
+					RoundRobinGantt.add(RRReadyQueue[RRLoop].clone());
 					RRReadyQueue[RRLoop].RunningTime = 0;
 				} else {
 					TempRunningTime = RRReadyQueue[RRLoop].ReturnRunningTime();

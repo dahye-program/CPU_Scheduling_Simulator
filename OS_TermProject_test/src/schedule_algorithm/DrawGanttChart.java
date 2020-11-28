@@ -9,7 +9,7 @@ import java.awt.Color;
 
 public class DrawGanttChart extends JFrame{
    final int STANDARDPX = 30;
-   public DrawGanttChart(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority) {
+   public DrawGanttChart(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
       
       
       Vector<ArgumentVector> FCFSGantt = new Vector<ArgumentVector>();
@@ -27,18 +27,18 @@ public class DrawGanttChart extends JFrame{
          TotalRunningTime += RunningTime[i];
       }
       
-      AlgorithmKangmin kangmin = new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
-      AlgorithmDahye dahye = new AlgorithmDahye(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority);
+      AlgorithmKangmin kangmin = new AlgorithmKangmin(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority, color);
+     // AlgorithmDahye dahye = new AlgorithmDahye(ProcessCount, TimeSlice, PID, ArrivalTime, RunningTime, Priority, color);
       
       FCFSGantt = kangmin.FCFS();
       RoundRobinGantt = kangmin.RoundRobin();
       //PreemptionGantt = kangmin.Preemption();
       
       // Dahye Code
-      SJFGantt = dahye.SJF();
-      HRNGantt = dahye.HRN();
-      SRTGantt = dahye.SRT();
-      NonPreemptionGantt = dahye.NonPreemption();
+     // SJFGantt = dahye.SJF();
+     // HRNGantt = dahye.HRN();
+     // SRTGantt = dahye.SRT();
+     // NonPreemptionGantt = dahye.NonPreemption();
             
       //System.out.println(RoundRobinGantt.size());
       
