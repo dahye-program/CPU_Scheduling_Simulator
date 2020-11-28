@@ -1,6 +1,7 @@
 package schedule_algorithm;
 
 import java.awt.Color;
+import java.beans.PropertyEditorManager;
 import java.util.Vector;
 
 public class AlgorithmKangmin {
@@ -56,7 +57,7 @@ public class AlgorithmKangmin {
 		}
 		
 		for(int i=0;i<ProcessCount;i++) {
-			FCFSReadyQueue[i].WaitTime = totalWaitingTime - FCFSReadyQueue[i].ArrivalTime;
+			FCFSReadyQueue[i].WaitingTime = totalWaitingTime - FCFSReadyQueue[i].ArrivalTime;
 			totalWaitingTime+=FCFSReadyQueue[i].RunningTime;
 			FCFSReadyQueue[i].ReturnTime = totalWaitingTime;
 			}
@@ -134,16 +135,66 @@ public class AlgorithmKangmin {
 	
 	Vector<ArgumentVector> Preemption(){
 		ArgumentVector[] PPReadyQueue = new ArgumentVector[ProcessCount];
+		ArgumentVector PPTemp = new ArgumentVector(0, 0, "temp", 0, color[0]);
+		int totalRunningTime = 0;
+		
 		for(int i=0;i<ProcessCount;i++) {
 			PPReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+			totalRunningTime += PPReadyQueue[i].ReturnTime;
 		}
 		
 		for(int i = ProcessCount-1; i>0;i--) {
 			for(int j=0;j<i;j++) {
-				//if(PPReadyQueue[j])
+				if(PPReadyQueue[j].ReturnArrivalTime()>PPReadyQueue[j+1].ReturnArrivalTime()) {
+					PPTemp = PPReadyQueue[j];
+					PPReadyQueue[j] = PPReadyQueue[j+1];
+					PPReadyQueue[j+1] = PPTemp;
+				}
 			}
 		}
 		
+		boolean isComplete = false;
+		
+		
+		int PPLoop = 0;
+		int currentRunningTime = 0;
+		int currentIndex;
+		int tempRunningTime;
+		
+		while(true) {
+			
+			isComplete = false;
+			currentIndex=0;
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(PPReadyQueue[i].RunningTime>0) {
+					isComplete=true;
+				}
+			}
+			
+			if (!isComplete)
+				break;
+			
+			PPTemp.ReSet(10000, 0, null, 10000);
+			
+			for(PPLoop=0;PPLoop<ProcessCount;PPLoop++) {
+				if(currentRunningTime>=PPReadyQueue[PPLoop].ArrivalTime && PPReadyQueue[PPLoop].RunningTime>0) {
+					if(PPTemp.Priority>PPReadyQueue[PPLoop].Priority) {
+						PPTemp = PPReadyQueue[PPLoop].clone();
+						currentIndex = PPLoop;
+					}
+				}
+			}
+			
+			if(PPTemp.ArrivalTime<=currentRunningTime) {			
+				tempRunningTime = PPTemp.ReturnRunningTime();
+				PPTemp.SetRunningTime(1);
+				PreemptionGantt.add(PPTemp.clone());
+				PPTemp.SetRunningTime(tempRunningTime-1);
+				PPReadyQueue[currentIndex] = PPTemp.clone();
+			}
+			currentRunningTime++;			
+		}
 		
 		return PreemptionGantt;
 	}

@@ -34,7 +34,7 @@ public class DrawGanttChart extends JFrame{
       
       FCFSGantt = kangmin.FCFS();
       RoundRobinGantt = kangmin.RoundRobin();
-      //PreemptionGantt = kangmin.Preemption();
+      PreemptionGantt = kangmin.Preemption();
       
       // Dahye Code
      // SJFGantt = dahye.SJF();
@@ -46,9 +46,12 @@ public class DrawGanttChart extends JFrame{
       
       // 여기서부터 GUI 영역
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setTitle("GhanttChart");
-      setSize(600,1000);
+      setTitle("GanttChart");
+      setSize(1000,1000);
       setVisible(true);
+      
+      Container c = getContentPane();
+      c.setLayout(null);
       
       
       JLabel LabelFCFS = new JLabel("FCFS간트차트");
@@ -59,34 +62,49 @@ public class DrawGanttChart extends JFrame{
       JLabel LabelHRN = new JLabel("HRN간트차트");
       JLabel LabelNPP = new JLabel("비선점간트차트");
       
+      JLabel[] LabelPID = new JLabel[ProcessCount];
       
-      LabelFCFS.setBounds(10, 80, 100, 20);
+      
+      LabelFCFS.setBounds(10, 80, 150, 20);
       LabelRR.setBounds(10,180,150,20);
-      LabelPP.setBounds(10,280,100,20);
+      LabelPP.setBounds(10,280,150,20);
+      LabelSRT.setBounds(10,380,150,20);
+      LabelSJF.setBounds(10,480,150,20);
+      LabelHRN.setBounds(10,580,150,20);
+      LabelNPP.setBounds(10,680,150,20);
    
       
       getContentPane().add(LabelFCFS);
       getContentPane().add(LabelRR);
       getContentPane().add(LabelPP);
+      getContentPane().add(LabelSRT);
+      getContentPane().add(LabelSJF);
+      getContentPane().add(LabelHRN);
+      getContentPane().add(LabelNPP);
       
-      
-      
-      
-      
-      Container c = getContentPane();
-      c.setLayout(null);
-      
-//      Canvas canvas = new Canvas();
-//      canvas.setBackground(Color.RED);
-//      canvas.setBounds(10, 100, STANDARDPX*TotalRunningTime, STANDARDPX);
-//      canvas.setName("test");
-//      getContentPane().add(canvas);
-      
-            
+      Canvas[] PrcoessColor = new Canvas[ProcessCount];      
       Canvas[] FCFS = new Canvas[ProcessCount];
       Canvas[] RoundRobin = new Canvas[RoundRobinGantt.size()];
+      Canvas[] Preemption = new Canvas[PreemptionGantt.size()];
       
-      //System.out.println(RoundRobinGantt.size());
+      //Canvas[] SRT = new Canvas[SRTGantt.size()];
+      //Canvas[] SJT = new Canvas[SJTGantt.size()];
+      //Canvas[] HRN = new Canvas[HRNGantt.size()];
+      //Canvas[] NPP = new Canvas[NPPGantt.size()];
+      
+      int ProcessColorTemp = 0;
+      for(int i=0;i<ProcessCount;i++) {
+    	  LabelPID[i] = new JLabel(FCFSGantt.get(i).PID);
+    	  LabelPID[i].setBounds(10+ProcessColorTemp, 50, STANDARDPX, STANDARDPX);
+    	  getContentPane().add(LabelPID[i]);
+    	  
+    	  
+    	  PrcoessColor[i] = new Canvas();
+    	  PrcoessColor[i].setBackground(FCFSGantt.get(i).ReturnColor());
+    	  PrcoessColor[i].setBounds(10+ProcessColorTemp, 20, STANDARDPX, STANDARDPX);
+    	  ProcessColorTemp += STANDARDPX + 10;
+    	  getContentPane().add(PrcoessColor[i]);
+      }
       
       int FCFSTemp = 0;
       for (int i = 0; i < ProcessCount; i++) {
@@ -94,20 +112,34 @@ public class DrawGanttChart extends JFrame{
          FCFS[i].setBackground(FCFSGantt.get(i).ReturnColor());
          FCFS[i].setBounds(10 + FCFSTemp, 100, FCFSGantt.get(i).ReturnRunningTime() * STANDARDPX, STANDARDPX);
          FCFSTemp += (FCFSGantt.get(i).ReturnRunningTime() * STANDARDPX);
-         //FCFSGantt.get(i).SetWaitingTime(WaitingTime);
+         
+         /////////////////////////GUI말고 다른부분////////////////////////////
+         //FCFSGantt.get(i).SetWaitingTime(FCFSTemp-FCFSGantt.get(i).ArrivalTime);
+         //FCFSTotalWaitingTime+=FCFSGantt.get(i).WaitingTime;
+         //FCFSTotalReturnTime+=FCFSTemp;
+         //////////////////////////////////////////////////////////////////
+         
          getContentPane().add(FCFS[i]);
       }
       
       int RoundRobinTemp = 0;
-      //getContentPane().repaint();
       for(int i=0;i<RoundRobinGantt.size();i++) {
-         //System.out.println(RoundRobinGantt.get(i).ReturnRunningTime());
          RoundRobin[i] = new Canvas();
          RoundRobin[i].setBackground(RoundRobinGantt.get(i).ReturnColor());
          RoundRobin[i].setBounds(10+RoundRobinTemp, 200, RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
          RoundRobinTemp += (RoundRobinGantt.get(i).ReturnRunningTime()*STANDARDPX);
          getContentPane().add(RoundRobin[i]);
       }
+      
+      int PreemptionTemp = 0;
+      for(int i=0;i<PreemptionGantt.size();i++) {
+    	  Preemption[i] = new Canvas();
+    	  Preemption[i].setBackground(PreemptionGantt.get(i).ReturnColor());
+    	  Preemption[i].setBounds(10+PreemptionTemp, 300, PreemptionGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+    	  PreemptionTemp += (PreemptionGantt.get(i).ReturnRunningTime()*STANDARDPX);
+    	  getContentPane().add(Preemption[i]);
+      }
+      
       
       int SJFTemp = 0;
    }
