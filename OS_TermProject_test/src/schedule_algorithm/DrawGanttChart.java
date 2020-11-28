@@ -188,5 +188,9 @@ public class DrawGanttChart extends JFrame{
       
       
       int SJFTemp = 0;
+      
+      //평균대기시간 평균반환시간 계산
+      FCFSTotalWaitingTime = FCFSTotalWaitingTime / (double)ProcessCount;
+      FCFSTotalReturnTime = FCFSTotalReturnTime / (double)ProcessCount;
    }
 }
