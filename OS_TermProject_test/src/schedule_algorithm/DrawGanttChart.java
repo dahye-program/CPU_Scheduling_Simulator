@@ -16,10 +16,11 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
+      Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
-      Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
+      
       
       int TotalRunningTime = 0;
       double FCFSTotalWaitingTime = 0;
