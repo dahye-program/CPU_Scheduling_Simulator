@@ -18,13 +18,6 @@ public class ArgumentVector {
 		this.RunningTime = RunningTime;
 		this.PID = PID;
 		this.Priority = Priority;
-		
-		
-//		Random rand = new Random();
-//		float r = rand.nextFloat() / 2f + (float)0.5;
-//		float g = rand.nextFloat() / 2f + (float)0.5;
-//		float b = rand.nextFloat() / 2f + (float)0.5;
-//		color = new Color(r, g, b);
 		this.color = color;
 	}
 	

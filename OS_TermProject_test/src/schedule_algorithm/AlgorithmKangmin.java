@@ -226,9 +226,22 @@ public class AlgorithmKangmin {
 				PreemptionGantt.add(PPTemp.clone());
 				PPTemp.SetRunningTime(tempRunningTime - 1);
 				PPReadyQueue[currentIndex] = PPTemp.clone();
+				
+				/////////////평균 대기, 반환 시간 구하는거//////////////
+				if(PPReadyQueue[currentIndex].ReturnRunningTime()==0) {
+					PPReadyQueue[currentIndex].SetReturnTime((double)PreemptionGantt.size());
+				}
+				/////////////////////////////////////////////////
+				
 			}
 			currentRunningTime++;
 		}
+		
+		///////////////평균 대기, 반환 시간 구하는거////////////
+		for(int j=0;j<PPReadyQueue.length;j++) {
+			PPTotalReturnTime += PPReadyQueue[j].ReturnTime;
+		}
+		/////////////////////////////////////////////////
 		
 		return PreemptionGantt;
 	}
@@ -239,5 +252,9 @@ public class AlgorithmKangmin {
 	
 	double ReturnRRWainttime() {
 		return RRTotalWaitingTime;
+	}
+	
+	double ReturnPPReturnTime() {
+		return PPTotalReturnTime;
 	}
 }

@@ -26,6 +26,8 @@ public class DrawGanttChart extends JFrame{
       double FCFSTotalReturnTime = 0;
       double RRAWT = 0;
       double RRATT = 0;
+      double PPAWT = 0;
+      double PPATT = 0;
       
       for(int i=0;i<ProcessCount;i++) {
          TotalRunningTime += RunningTime[i];
@@ -199,7 +201,7 @@ public class DrawGanttChart extends JFrame{
       JLabel LabelFCFSAWT = new JLabel("평균 대기 시간 : " + FCFSTotalWaitingTime);
       JLabel LabelFCFSATT = new JLabel("평균 반환 시간 : " + FCFSTotalReturnTime);
       LabelFCFSAWT.setBounds(10, 240, 300, 20);
-      LabelFCFSATT.setBounds(10, 260, 300, 20);
+      LabelFCFSATT.setBounds(310, 240, 300, 20);
       getContentPane().add(LabelFCFSAWT);
       getContentPane().add(LabelFCFSATT);
       
@@ -208,8 +210,17 @@ public class DrawGanttChart extends JFrame{
       JLabel LabelRRAWT = new JLabel("평균 대기 시간 : " + RRAWT);
       JLabel LabelRRATT = new JLabel("평균 반환 시간 : " + RRATT);
       LabelRRAWT.setBounds(10, 340, 300, 20);
-      LabelRRATT.setBounds(10, 360, 300, 20);
+      LabelRRATT.setBounds(310, 340, 300, 20);
       getContentPane().add(LabelRRAWT);
       getContentPane().add(LabelRRATT);
+      
+      PPATT = kangmin.ReturnPPReturnTime() / (double)ProcessCount;
+      
+      JLabel LabelPPAWT = new JLabel("평균 대기 시간 : " + PPAWT);
+      JLabel LabelPPATT = new JLabel("평균 반환 시간 : " + PPATT);
+      LabelPPAWT.setBounds(10, 440, 300, 20);
+      LabelPPATT.setBounds(310, 440, 300, 20);
+      getContentPane().add(LabelPPAWT);
+      getContentPane().add(LabelPPATT);
    }
 }
