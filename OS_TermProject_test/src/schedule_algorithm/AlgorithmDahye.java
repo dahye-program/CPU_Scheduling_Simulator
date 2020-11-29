@@ -11,6 +11,7 @@ public class AlgorithmDahye {
 	int[] Priority;
 	String[] PID;
 	Color[] color;
+	boolean Completed;
 
 	// 반환할 것들 만들어줌
 	Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
@@ -19,7 +20,7 @@ public class AlgorithmDahye {
 	Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
 
 	public AlgorithmDahye(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime,
-			int[] Priority, Color[] color) {
+		int[] Priority, Color[] color) {
 		// TODO Auto-generated constructor stub
 		this.ProcessCount = ProcessCount;
 		this.TimeSlice = TimeSlice;
@@ -28,6 +29,7 @@ public class AlgorithmDahye {
 		this.Priority = Priority;
 		this.PID = PID;
 		this.color = color;
+		//this.Completed = false;
 	}
 
 	Vector<ArgumentVector> SJF() {
@@ -78,14 +80,13 @@ public class AlgorithmDahye {
 	Vector<ArgumentVector> HRN() {
 		int totalWaitingTime = 0;
 		int totalRunningTime = 0;
-		boolean test = false;
+		boolean Completed = false;
 		ArgumentVector[] HRNReadyQueue = new ArgumentVector[ProcessCount];
 		
 		for (int i = 0; i < ProcessCount; i++) {
-			HRNReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+			HRNReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i],Completed);
 			totalRunningTime += HRNReadyQueue[i].ReturnRunningTime(); //총 실행시간
 		}
-		boolean isComplete = false;
 		ArgumentVector HRNTemp = new ArgumentVector(0, 0, "temp", 0, color[0]);
 		// 도착 시간 순서대로 정렬
 		for (int i = ProcessCount - 1; i > 0; i--) {
@@ -109,7 +110,7 @@ public class AlgorithmDahye {
 		for (time = HRNReadyQueue[0].ReturnArrivalTime(); time < totalRunningTime; time++) {
 			hrr = -9999;
 			for(int j = 0; j < ProcessCount; j++) {
-				if((HRNReadyQueue[j].ReturnArrivalTime() <= time) ) {
+				if((HRNReadyQueue[j].ReturnArrivalTime() <= time)&&(HRNReadyQueue[j].Completed!=true) ) {
 					temp = (HRNReadyQueue[j].ReturnRunningTime()+(time-HRNReadyQueue[j].ReturnArrivalTime())/HRNReadyQueue[j].ReturnRunningTime());
 					if(hrr<temp) {
 						hrr=temp;
@@ -119,6 +120,7 @@ public class AlgorithmDahye {
 			}
 		}
 		time += HRNReadyQueue[loc].ReturnRunningTime();
+		HRNReadyQueue[loc].Completed = true;
 
 		// P1은 위에서 바로 Set함
 		for (int i = 1; i < ProcessCount; i++) {

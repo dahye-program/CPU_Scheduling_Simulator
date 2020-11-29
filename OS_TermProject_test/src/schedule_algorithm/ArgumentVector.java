@@ -12,6 +12,7 @@ public class ArgumentVector {
 	double ReturnTime;
 	int RespawnTime;
 	public Color color;
+	boolean Completed;
 	
 	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority, Color color) {
 		this.ArrivalTime = ArrivalTime;
@@ -19,6 +20,14 @@ public class ArgumentVector {
 		this.PID = PID;
 		this.Priority = Priority;
 		this.color = color;
+	}
+	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority, Color color, boolean Completed) {
+		this.ArrivalTime = ArrivalTime;
+		this.RunningTime = RunningTime;
+		this.PID = PID;
+		this.Priority = Priority;
+		this.color = color;
+		this.Completed = Completed;
 	}
 	
 	public void ReSet(int StartTime, int RunningTime, String PID, int Priority) {
