@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Vector;
 
 public class AlgorithmDahye {
+	// push 해줘!!!!!!QWE
 	int ProcessCount;
 	int TimeSlice;
 	int[] ArrivalTime;
@@ -15,7 +16,7 @@ public class AlgorithmDahye {
 
 	// 반환할 것들 만들어줌
 	Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
-	Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
+	Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
 	Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
 	Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
 
@@ -77,18 +78,19 @@ public class AlgorithmDahye {
 		return SJFGantt;
 	}
 
-	Vector<ArgumentVector> HRN() {
+	Vector<ArgumentVector_> HRN() {
 		//할로하
 		int totalWaitingTime = 0;
 		int totalRunningTime = 0;
-		boolean Completed = false;
-		ArgumentVector[] HRNReadyQueue = new ArgumentVector[ProcessCount];
+		int currentRunningTime = 0;
+		
+		ArgumentVector_[] HRNReadyQueue = new ArgumentVector_[ProcessCount];
 		
 		for (int i = 0; i < ProcessCount; i++) {
-			HRNReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i],Completed);
+			HRNReadyQueue[i] = new ArgumentVector_(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
 			totalRunningTime += HRNReadyQueue[i].ReturnRunningTime(); //총 실행시간
 		}
-		ArgumentVector HRNTemp = new ArgumentVector(0, 0, "temp", 0, color[0]);
+		ArgumentVector_ HRNTemp = new ArgumentVector_(0, 0, "temp", 0, color[0]);
 		// 도착 시간 순서대로 정렬
 		for (int i = ProcessCount - 1; i > 0; i--) {
 			for (int j = 0; j < i; j++) {
@@ -100,31 +102,23 @@ public class AlgorithmDahye {
 			}
 		}
 		
-		HRNReadyQueue[0].WaitingTime = totalWaitingTime - HRNReadyQueue[0].ArrivalTime;
-		totalWaitingTime += HRNReadyQueue[0].RunningTime;
-		HRNReadyQueue[0].ReturnTime = totalWaitingTime;
+		while (true) {
+	         int i = 0;
+	         if (HRNReadyQueue[i].ReturnRunningTime() > 0) {
+	            HRNGantt.add(HRNReadyQueue[i]);
+	            currentRunningTime += HRNReadyQueue[i].ReturnRunningTime();
+	            for (int j = 1; j < ProcessCount; j++) {
+	               if (HRNReadyQueue[j].ReturnArrivalTime() >= currentRunningTime) {
+	                  HRNReadyQueue[j].setPriority((double)(currentRunningTime - HRNReadyQueue[j].ReturnArrivalTime()
+		                        + (double)HRNReadyQueue[j].ReturnRunningTime()) / (double)HRNReadyQueue[j].ReturnRunningTime());
+	               }         
+	            }
+	         }
+	         i++;
+	         if (i == ProcessCount)
+	            break;
+	      }
 
-		//float hrnPriority[] = new float[ProcessCount];
-		float hrr, temp;
-		int time, loc=0;
-		
-		for (time = HRNReadyQueue[0].ReturnArrivalTime(); time < totalRunningTime; time++) {
-			hrr = -9999;
-			for(int j = 0; j < ProcessCount; j++) {
-				if((HRNReadyQueue[j].ReturnArrivalTime() <= time)&&(HRNReadyQueue[j].Completed!=true) ) {
-					temp = (HRNReadyQueue[j].ReturnRunningTime()+(time-HRNReadyQueue[j].ReturnArrivalTime())/HRNReadyQueue[j].ReturnRunningTime());
-					if(hrr<temp) {
-						hrr=temp;
-						loc=j;
-					}
-				}
-			}
-			time += HRNReadyQueue[loc].ReturnRunningTime();
-			
-			//??
-			HRNReadyQueue[loc].Completed = true;
-		}
-		
 
 		// P1은 위에서 바로 Set함
 		for (int i = 1; i < ProcessCount; i++) {

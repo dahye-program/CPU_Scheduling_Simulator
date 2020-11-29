@@ -19,7 +19,8 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> NPPGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
-      Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
+      Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
+      //Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       
       int TotalRunningTime = 0;
@@ -46,6 +47,10 @@ public class DrawGanttChart extends JFrame{
       // Dahye Code
       SJFGantt = dahye.SJF();
       HRNGantt = dahye.HRN();
+<<<<<<< HEAD
+=======
+      NonPreemptionGantt = dahye.NonPreemption();
+>>>>>>> refs/remotes/origin/main
             
       //System.out.println(RoundRobinGantt.size());
       
