@@ -19,13 +19,9 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
-<<<<<<< HEAD
       Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
-      Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
-=======
-      Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
+      //Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
->>>>>>> branch 'main' of https://github.com/dahye-program/CPU_Scheduling_Simulator.git
       
       int TotalRunningTime = 0;
       double FCFSTotalWaitingTime = 0;
@@ -50,7 +46,7 @@ public class DrawGanttChart extends JFrame{
       // Dahye Code
       SJFGantt = dahye.SJF();
       HRNGantt = dahye.HRN();
-     // NonPreemptionGantt = dahye.NonPreemption();
+      NonPreemptionGantt = dahye.NonPreemption();
             
       //System.out.println(RoundRobinGantt.size());
       
