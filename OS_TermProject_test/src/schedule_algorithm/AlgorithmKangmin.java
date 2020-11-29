@@ -19,6 +19,8 @@ public class AlgorithmKangmin {
 	double PPTotalWatingTime = 0;
 	double PPTotalReturnTime = 0;
 	
+	//박강민 바보
+	
 	
 	// 반환할 것들 만들어줌
 	 Vector<ArgumentVector> FCFSGantt = new Vector<ArgumentVector>();
