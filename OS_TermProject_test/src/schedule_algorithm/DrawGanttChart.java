@@ -18,7 +18,7 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
-      Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
+      Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
       Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       int TotalRunningTime = 0;
