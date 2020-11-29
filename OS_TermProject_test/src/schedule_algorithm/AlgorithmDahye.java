@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Vector;
 
 public class AlgorithmDahye {
-	// push «ÿ¡‡
+	// push «ÿ¡‡!!
 	int ProcessCount;
 	int TimeSlice;
 	int[] ArrivalTime;
