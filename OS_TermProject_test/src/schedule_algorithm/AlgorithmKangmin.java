@@ -25,6 +25,7 @@ public class AlgorithmKangmin {
 	 Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> NPPGantt = new Vector<ArgumentVector>();
+	 Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
 	
 
 	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
@@ -376,7 +377,7 @@ public class AlgorithmKangmin {
 			isAdd = false;
 			
 			for(int i=0;i<ProcessCount;i++) {
-				if(NPPReadyQueue[i].ReturnRunningTime()>0 && NPPReadyQueue[i].ReturnArrivalTime()<currentRunningTime) {
+				if(NPPReadyQueue[i].ReturnRunningTime()>0 && NPPReadyQueue[i].ReturnArrivalTime()<=currentRunningTime) {
 					NPPGantt.add(NPPReadyQueue[i].clone());
 					currentRunningTime+=NPPReadyQueue[i].ReturnRunningTime();
 					NPPReadyQueue[i].SetRunningTime(0);
@@ -393,6 +394,76 @@ public class AlgorithmKangmin {
 		
 		return NPPGantt;
 	}
+	
+	Vector<ArgumentVector_> HRN(){
+		
+		
+		
+		ArgumentVector_[] HRNReadyQueue = new ArgumentVector_[ProcessCount];
+		ArgumentVector_ Temp = new ArgumentVector_(0, 0, null, 0, null);
+		
+		for(int i=0;i<ProcessCount;i++) {
+			HRNReadyQueue[i] = new ArgumentVector_(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+		}
+		
+		for(int i=ProcessCount-1;i>=0;i--) {
+			for(int j=0;j<i;j++) {
+				if(HRNReadyQueue[j].ReturnArrivalTime()>HRNReadyQueue[j+1].ReturnArrivalTime()) {
+					Temp = HRNReadyQueue[j];
+					HRNReadyQueue[j] = HRNReadyQueue[j+1];
+					HRNReadyQueue[j+1] = Temp;
+				}
+			}
+		}
+		
+		boolean isAdd = false;
+		boolean isComplete = false;
+		int currentRunningTime = 0;
+		
+		while(true) {
+			
+			System.out.println("hit");
+			
+			isComplete = false;
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(HRNReadyQueue[i].ReturnRunningTime()>0) {
+					isComplete = true;
+				}
+			}
+			
+			if(!isComplete) {
+				break;
+			}
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(HRNReadyQueue[i].ReturnRunningTime()>0 && HRNReadyQueue[i].ReturnArrivalTime()<=currentRunningTime) {
+					HRNGantt.add(HRNReadyQueue[i].clone());
+					currentRunningTime += HRNReadyQueue[i].ReturnRunningTime();
+					HRNReadyQueue[i].SetRunningTime(0);
+					for(int j=0;j<ProcessCount;j++) {
+						HRNReadyQueue[j].Priority = ((double)currentRunningTime - (double)HRNReadyQueue[j].ReturnArrivalTime()+(double)HRNReadyQueue[j].ReturnRunningTime()) / (double)HRNReadyQueue[j].ReturnRunningTime();
+					}
+					for(int k = ProcessCount-1;k>=0;k--) {
+						for(int l=0;l<k;l++) {
+							if(HRNReadyQueue[l].ReturnPriority()<HRNReadyQueue[l+1].ReturnPriority()) {
+								Temp = HRNReadyQueue[l];
+								HRNReadyQueue[l] = HRNReadyQueue[l+1];
+								HRNReadyQueue[l+1] = Temp;
+							}
+						}
+					}
+					isAdd = true;
+				}
+				if(!isAdd) {
+					currentRunningTime++;
+				}
+				isAdd = false;
+			}
+		}
+		return HRNGantt;
+	}
+	
 	
 	double ReturnRRReturnTime() {
 		return RRTotalReturnTime;

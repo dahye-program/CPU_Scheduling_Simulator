@@ -20,7 +20,6 @@ public class DrawGanttChart extends JFrame{
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
-      //Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       
       int TotalRunningTime = 0;
@@ -46,12 +45,10 @@ public class DrawGanttChart extends JFrame{
       PreemptionGantt = kangmin.Preemption();
       SRTGantt = kangmin.SRT();
       NPPGantt = kangmin.NPP();
+      HRNGantt = kangmin.HRN();
       
       // Dahye Code
       SJFGantt = dahye.SJF();
-      //HRNGantt = dahye.HRN();
-            
-      //System.out.println(RoundRobinGantt.size());
       
       // 여기서부터 GUI 영역
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
