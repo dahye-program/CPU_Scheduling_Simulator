@@ -63,14 +63,14 @@ public class AlgorithmDahye {
 				SJFReadyQueue[i + 1] = SJFTemp;
 			}
 		}
-		for(int i=0; i<ProcessCount-1; i++) {
+		for(int i=0; i<ProcessCount; i++) {
 			SJFReadyQueue[i].WaitingTime = currentTime - SJFReadyQueue[i].ReturnArrivalTime();
 			currentTime += SJFReadyQueue[i].RunningTime;
 			SJFReadyQueue[i].ReturnTime = currentTime-SJFReadyQueue[i].ReturnArrivalTime();
 		}
 		
 		//평균 반환시간, 대기시간 
-		for(int j=0;j<SJFReadyQueue.length;j++) {
+		for(int j=0;j<ProcessCount;j++) {
 			SJFTotalReturnTime += SJFReadyQueue[j].ReturnTime;
 			SJFTotalWaitingTime += SJFReadyQueue[j].WaitingTime;
 		}
