@@ -119,9 +119,12 @@ public class AlgorithmDahye {
 					}
 				}
 			}
+			time += HRNReadyQueue[loc].ReturnRunningTime();
+			
+			//??
+			HRNReadyQueue[loc].Completed = true;
 		}
-		time += HRNReadyQueue[loc].ReturnRunningTime();
-		HRNReadyQueue[loc].Completed = true;
+		
 
 		// P1은 위에서 바로 Set함
 		for (int i = 1; i < ProcessCount; i++) {
