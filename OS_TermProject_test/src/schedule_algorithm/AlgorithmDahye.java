@@ -78,6 +78,7 @@ public class AlgorithmDahye {
 	}
 
 	Vector<ArgumentVector> HRN() {
+		//гр╥нго
 		int totalWaitingTime = 0;
 		int totalRunningTime = 0;
 		boolean Completed = false;
