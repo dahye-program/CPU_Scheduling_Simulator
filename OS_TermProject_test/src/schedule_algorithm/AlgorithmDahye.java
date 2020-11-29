@@ -82,7 +82,8 @@ public class AlgorithmDahye {
 		//할로하
 		int totalWaitingTime = 0;
 		int totalRunningTime = 0;
-		boolean Completed = false;
+		int currentRunningTime = 0;
+		
 		ArgumentVector_[] HRNReadyQueue = new ArgumentVector_[ProcessCount];
 		
 		for (int i = 0; i < ProcessCount; i++) {
@@ -101,10 +102,23 @@ public class AlgorithmDahye {
 			}
 		}
 		
-		HRNReadyQueue[0].WaitingTime = totalWaitingTime - HRNReadyQueue[0].ArrivalTime;
-		totalWaitingTime += HRNReadyQueue[0].RunningTime;
-		HRNReadyQueue[0].ReturnTime = totalWaitingTime;
-		
+		while (true) {
+	         int i = 0;
+	         if (HRNReadyQueue[i].ReturnRunningTime() > 0) {
+	            HRNGantt.add(HRNReadyQueue[i]);
+	            currentRunningTime += HRNReadyQueue[i].ReturnRunningTime();
+	            for (int j = 1; j < ProcessCount; j++) {
+	               if (HRNReadyQueue[j].ReturnArrivalTime() >= currentRunningTime) {
+	                  HRNReadyQueue[j].setPriority((double)(currentRunningTime - HRNReadyQueue[j].ReturnArrivalTime()
+		                        + (double)HRNReadyQueue[j].ReturnRunningTime()) / (double)HRNReadyQueue[j].ReturnRunningTime());
+	               }         
+	            }
+	         }
+	         i++;
+	         if (i == ProcessCount)
+	            break;
+	      }
+
 
 		// P1은 위에서 바로 Set함
 		for (int i = 1; i < ProcessCount; i++) {

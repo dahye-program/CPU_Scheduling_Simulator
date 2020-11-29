@@ -132,6 +132,10 @@ class ArgumentVector_ {
 		this.WaitingTime += WaitingTime;
 	}
 	
+	void setPriority(double Priority) {
+		this.Priority = Priority;
+	}
+	
 	int GetRunningTime() {
 		return RunningTime;
 	}
