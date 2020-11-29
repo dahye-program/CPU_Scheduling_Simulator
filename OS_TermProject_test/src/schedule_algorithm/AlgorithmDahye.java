@@ -13,6 +13,8 @@ public class AlgorithmDahye {
 	String[] PID;
 	Color[] color;
 	boolean Completed;
+	double SJFTotalWaitingTime=0;
+	double SJFTotalReturnTime=0;
 
 	// 반환할 것들 만들어줌
 	Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
@@ -65,6 +67,12 @@ public class AlgorithmDahye {
 			SJFReadyQueue[i].WaitingTime = currentTime - SJFReadyQueue[i].ReturnArrivalTime();
 			currentTime += SJFReadyQueue[i].RunningTime;
 			SJFReadyQueue[i].ReturnTime = currentTime-SJFReadyQueue[i].ReturnArrivalTime();
+		}
+		
+		//평균 반환시간, 대기시간 
+		for(int j=0;j<SJFReadyQueue.length;j++) {
+			SJFTotalReturnTime += SJFReadyQueue[j].ReturnTime;
+			SJFTotalWaitingTime += SJFReadyQueue[j].WaitingTime;
 		}
 
 		for (int i = 0; i < ProcessCount; i++) {

@@ -31,6 +31,9 @@ public class DrawGanttChart extends JFrame{
       double PPAWT = 0;
       double PPATT = 0;
       
+      double SJFAWT = 0;
+      double SJFATT = 0;
+      
       for(int i=0;i<ProcessCount;i++) {
          TotalRunningTime += RunningTime[i];
       }
@@ -251,5 +254,15 @@ public class DrawGanttChart extends JFrame{
       LabelPPATT.setBounds(310, 440, 300, 20);
       getContentPane().add(LabelPPAWT);
       getContentPane().add(LabelPPATT);
+      
+      SJFATT = dahye.SJFTotalReturnTime / (double)ProcessCount;
+      SJFAWT = dahye.SJFTotalWaitingTime / (double)ProcessCount;
+      
+      JLabel LabelSJFAWT = new JLabel("평균 대기 시간 : " + SJFAWT);
+      JLabel LabelSJFATT = new JLabel("평균 반환 시간 : " + SJFATT);
+      LabelSJFAWT.setBounds(10, 640, 300, 20);
+      LabelSJFATT.setBounds(310, 640, 300, 20);
+      getContentPane().add(LabelSJFAWT);
+      getContentPane().add(LabelSJFATT);
    }
 }
