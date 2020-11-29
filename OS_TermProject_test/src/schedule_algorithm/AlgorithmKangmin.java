@@ -18,6 +18,12 @@ public class AlgorithmKangmin {
 	double RRTotalReturnTime = 0;
 	double PPTotalWatingTime = 0;
 	double PPTotalReturnTime = 0;
+	double SJFTotalWaitingTime = 0;
+	double SJFTotalReturnTime = 0;
+	double HRNTotalWaitingTime = 0;
+	double HRNTotalReturnTime = 0;
+	double SRTTotalWaitingTime = 0;
+	double SRTTotalReturnTime = 0;
 	
 	// 반환할 것들 만들어줌
 	 Vector<ArgumentVector> FCFSGantt = new Vector<ArgumentVector>();
@@ -255,15 +261,15 @@ public class AlgorithmKangmin {
 			SRTReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
 		}
 		
-		for(int i = ProcessCount - 1;i>=0;i--) {
-			for(int j=0;j<i;j++) {
-				if(SRTReadyQueue[j].ArrivalTime>SRTReadyQueue[j+1].ArrivalTime) {
-					Temp = SRTReadyQueue[j+1].clone();
-					SRTReadyQueue[j+1] = SRTReadyQueue[j].clone();
-					SRTReadyQueue[j] = Temp.clone();
-				}
-			}
-		}
+//		for(int i = ProcessCount - 1;i>=0;i--) {
+//			for(int j=0;j<i;j++) {
+//				if(SRTReadyQueue[j].ArrivalTime>SRTReadyQueue[j+1].ArrivalTime) {
+//					Temp = SRTReadyQueue[j+1].clone();
+//					SRTReadyQueue[j+1] = SRTReadyQueue[j].clone();
+//					SRTReadyQueue[j] = Temp.clone();
+//				}
+//			}
+//		}
 		
 		boolean isComplete = false;
 		boolean isAdd = false;
@@ -291,9 +297,21 @@ public class AlgorithmKangmin {
 					if (SRTReadyQueue[i].ReturnRunningTime() > TimeSlice) {
 						TempRunningTime = SRTReadyQueue[i].ReturnRunningTime();
 						SRTReadyQueue[i].SetRunningTime(TimeSlice);
+						
+						////////////////평균 대기시간 구하는 곳//////////////////////
+						//SRTReadyQueue[i].SetWaitingTime(currentRunningTime-SRTReadyQueue[i].ReturnArrivalTime());
+						//SRTReadyQueue[i].SetArrivalTime(currentRunningTime);
+						//////////////////////////////////////////////////////
+						
 						SRTGantt.add(SRTReadyQueue[i].clone());
-						currentRunningTime += SRTReadyQueue[i].ReturnRunningTime();
+						currentRunningTime += SRTReadyQueue[i].ReturnRunningTime();						
 						SRTReadyQueue[i].SetRunningTime(TempRunningTime - TimeSlice);
+						
+						///////////////평균 반환시간 구하는 곳///////////////////////
+						//if(TempRunningTime-TimeSlice==0) {
+						//	SRTReadyQueue[i].SetReturnTime(currentRunningTime);
+						//}
+						//////////////////////////////////////////////////////
 
 						isAdd = true;
 
@@ -307,9 +325,18 @@ public class AlgorithmKangmin {
 							}
 						}
 					} else {
+						
+						////////////////평균 대기시간 구하는 곳/////////////////////
+						//SRTReadyQueue[i].SetWaitingTime(currentRunningTime-SRTReadyQueue[i].ReturnArrivalTime());
+						//////////////////////////////////////////////////////
+						
 						SRTGantt.add(SRTReadyQueue[i].clone());
 						currentRunningTime += SRTReadyQueue[i].ReturnRunningTime();
 						SRTReadyQueue[i].SetRunningTime(0);
+						
+						/////////////////평균 반환시간 구하는 곳//////////////////////
+						//SRTReadyQueue[i].SetReturnTime(currentRunningTime);
+						///////////////////////////////////////////////////////
 
 						isAdd = true;
 
@@ -333,6 +360,11 @@ public class AlgorithmKangmin {
 			
 			isAdd = false;
 			
+		}
+		
+		for(int i=0;i<ProcessCount;i++) {
+			SRTTotalReturnTime += SRTReadyQueue[i].ReturnTime;
+			SRTTotalWaitingTime += SRTReadyQueue[i].WaitingTime;
 		}
 		
 		return SRTGantt;
@@ -450,8 +482,18 @@ public class AlgorithmKangmin {
 			for(int i=0;i<ProcessCount;i++) {
 				if(HRNReadyQueue[i].ReturnRunningTime()>0 && HRNReadyQueue[i].ReturnArrivalTime()<=currentRunningTime) {
 					HRNGantt.add(HRNReadyQueue[i].clone());
+					
+					/////////////평균 대기시간 구하는 곳///////////////////////
+					HRNReadyQueue[i].SetWaitingTime(currentRunningTime-HRNReadyQueue[i].ArrivalTime);
+					////////////////////////////////////////////////////
+					
 					currentRunningTime += HRNReadyQueue[i].ReturnRunningTime();
 					HRNReadyQueue[i].SetRunningTime(0);
+					
+					///////////////평균 반환시간 구하는 곳////////////////////
+					HRNReadyQueue[i].SetReturnTime(currentRunningTime);
+					///////////////////////////////////////////////////
+					
 					for(int j=0;j<ProcessCount;j++) {
 						HRNReadyQueue[j].Priority = ((double)currentRunningTime - (double)HRNReadyQueue[j].ReturnArrivalTime()+(double)HRNReadyQueue[j].ReturnRunningTime()) / (double)HRNReadyQueue[j].ReturnRunningTime();
 					}
@@ -475,6 +517,12 @@ public class AlgorithmKangmin {
 				isAdd = false;
 			}
 		}
+		
+		for(int i=0;i<ProcessCount;i++) {
+			HRNTotalReturnTime += HRNReadyQueue[i].ReturnTime;
+			HRNTotalWaitingTime += HRNReadyQueue[i].WaitingTime;
+		}		
+		
 		return HRNGantt;
 	}
 	
@@ -518,10 +566,20 @@ public class AlgorithmKangmin {
 
 			for (int i = 0; i < ProcessCount; i++) {
 				if (SJFReadyQueue[i].ReturnRunningTime() > 0 && SJFReadyQueue[i].ReturnArrivalTime() <= currentRunningTime) {
+					
+					///////////////////평균 대기시간 구하는 곳///////////////////
+					SJFReadyQueue[i].SetWaitingTime(currentRunningTime-SJFReadyQueue[i].ReturnArrivalTime());
+					//////////////////////////////////////////////////////
+					
 					SJFGantt.add(SJFReadyQueue[i].clone());
 					currentRunningTime += SJFReadyQueue[i].ReturnRunningTime();
 					SJFReadyQueue[i].SetRunningTime(0);
 					isAdd = true;
+					
+					///////////////////평균 반환시간 구하는곳//////////////////
+					SJFReadyQueue[i].SetReturnTime(currentRunningTime);
+					/////////////////////////////////////////////////////////
+					
 					break;
 				}
 			}
@@ -532,6 +590,11 @@ public class AlgorithmKangmin {
 			
 			isAdd = false;
 
+		}
+		
+		for(int i=0;i<ProcessCount;i++) {
+			SJFTotalReturnTime += SJFReadyQueue[i].ReturnTime;
+			SJFTotalWaitingTime += SJFReadyQueue[i].WaitingTime;
 		}
 		
 		return SJFGantt;

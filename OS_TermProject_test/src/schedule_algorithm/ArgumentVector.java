@@ -37,6 +37,10 @@ public class ArgumentVector {
 		this.Priority = Priority;
 	}
 	
+	void SetArrivalTime(int ArrivalTime) {
+		this.ArrivalTime = ArrivalTime;
+	}
+	
 	void SetRunningTime(int RunningTime) {
 		this.RunningTime = RunningTime;
 	}

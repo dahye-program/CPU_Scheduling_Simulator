@@ -25,13 +25,21 @@ public class DrawGanttChart extends JFrame{
       int TotalRunningTime = 0;
       double FCFSTotalWaitingTime = 0;
       double FCFSTotalReturnTime = 0;
+      
       double RRAWT = 0;
       double RRATT = 0;
+      
       double PPAWT = 0;
       double PPATT = 0;
       
       double SJFAWT = 0;
       double SJFATT = 0;
+      
+      double HRNAWT = 0;
+      double HRNATT = 0;
+      
+      double SRTAWT = 0;
+      double SRTATT = 0;
       
       for(int i=0;i<ProcessCount;i++) {
          TotalRunningTime += RunningTime[i];
@@ -251,8 +259,8 @@ public class DrawGanttChart extends JFrame{
       getContentPane().add(LabelPPAWT);
       getContentPane().add(LabelPPATT);
       
-      SJFATT = dahye.SJFTotalReturnTime / (double)ProcessCount;
-      SJFAWT = dahye.SJFTotalWaitingTime / (double)ProcessCount;
+      SJFATT = kangmin.SJFTotalReturnTime / (double)ProcessCount;
+      SJFAWT = kangmin.SJFTotalWaitingTime / (double)ProcessCount;
       
       JLabel LabelSJFAWT = new JLabel("평균 대기 시간 : " + SJFAWT);
       JLabel LabelSJFATT = new JLabel("평균 반환 시간 : " + SJFATT);
@@ -260,5 +268,28 @@ public class DrawGanttChart extends JFrame{
       LabelSJFATT.setBounds(310, 640, 300, 20);
       getContentPane().add(LabelSJFAWT);
       getContentPane().add(LabelSJFATT);
+      
+      
+      HRNATT = kangmin.HRNTotalReturnTime / (double)ProcessCount;
+      HRNAWT = kangmin.HRNTotalWaitingTime / (double)ProcessCount;
+      
+      JLabel LabelHRNAWT = new JLabel("평균 대기 시간 : " + HRNAWT);
+      JLabel LabelHRNATT = new JLabel("평균 반환 시간 : " + HRNATT);
+      LabelHRNAWT.setBounds(10, 740, 300, 20);
+      LabelHRNATT.setBounds(310, 740, 300, 20);
+      getContentPane().add(LabelHRNAWT);
+      getContentPane().add(LabelHRNATT);
+      
+      
+//      SRTATT = kangmin.SRTTotalReturnTime / (double)ProcessCount;
+//      SRTAWT = kangmin.SRTTotalWaitingTime / (double)ProcessCount;
+//      
+//      JLabel LabelSRTAWT = new JLabel("평균 대기 시간 : " + SRTAWT);
+//      JLabel LabelSRTATT = new JLabel("평균 반환 시간 : " + SRTATT);
+//      LabelSRTAWT.setBounds(10, 540, 300, 20);
+//      LabelSRTATT.setBounds(310, 540, 300, 20);
+//      getContentPane().add(LabelSRTAWT);
+//      getContentPane().add(LabelSRTATT);
+      
    }
 }
