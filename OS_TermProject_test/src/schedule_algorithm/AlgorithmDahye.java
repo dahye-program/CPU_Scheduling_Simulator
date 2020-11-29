@@ -39,6 +39,7 @@ public class AlgorithmDahye {
 		int totalWaitingTime = 0;
 		int currentTime = 0;
 		ArgumentVector[] SJFReadyQueue = new ArgumentVector[ProcessCount];
+		ArgumentVector Temp = new ArgumentVector(0, 0, "temp", 0, color[0]);
 
 		for (int i = 0; i < ProcessCount; i++) {
 			SJFReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
@@ -56,17 +57,48 @@ public class AlgorithmDahye {
 			}
 		}
 		// 2번째 프로세스부터 작업 시간 짧은 순으로 정렬 -> 작업 시간 오름차순
-		for (int i = 1; i < ProcessCount - 1; i++) {
-			if (SJFReadyQueue[i].GetRunningTime() > SJFReadyQueue[i + 1].GetRunningTime()) {
-				SJFTemp = SJFReadyQueue[i];
-				SJFReadyQueue[i] = SJFReadyQueue[i + 1];
-				SJFReadyQueue[i + 1] = SJFTemp;
+		boolean isAdd = false;
+		boolean isComplete = false;
+		int currentRunningTime = 0;
+		
+		while(true) {
+			
+			isComplete = false;
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(SJFReadyQueue[i].ReturnRunningTime()>0) {
+					isComplete = true;
+				}
+			}
+			
+			if(!isComplete) {
+				break;
+			}
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(SJFReadyQueue[i].ReturnRunningTime()>0 && SJFReadyQueue[i].ReturnArrivalTime()<=currentRunningTime) {
+					SJFGantt.add(SJFReadyQueue[i].clone());
+					currentRunningTime += SJFReadyQueue[i].ReturnRunningTime();
+					SJFReadyQueue[i].SetRunningTime(0);
+					for(int j=1;j<ProcessCount-1;j++) {
+						if (SJFReadyQueue[j].GetRunningTime() > SJFReadyQueue[j + 1].GetRunningTime()) {
+							SJFTemp = SJFReadyQueue[j];
+							SJFReadyQueue[j] = SJFReadyQueue[j + 1];
+							SJFReadyQueue[j + 1] = SJFTemp;
+						}
+					}
+					isAdd = true;
+				}
+				if(!isAdd) {
+					currentRunningTime++;
+				}
+				isAdd = false;
 			}
 		}
 		for(int i=0; i<ProcessCount; i++) {
-			SJFReadyQueue[i].WaitingTime = currentTime - SJFReadyQueue[i].ReturnArrivalTime();
 			currentTime += SJFReadyQueue[i].RunningTime;
-			SJFReadyQueue[i].ReturnTime = currentTime-SJFReadyQueue[i].ReturnArrivalTime();
+			SJFReadyQueue[i].WaitingTime = currentTime - SJFReadyQueue[i].ReturnArrivalTime();
+			SJFReadyQueue[i].ReturnTime = currentTime+SJFReadyQueue[i].ReturnRunningTime();
 		}
 		
 		//평균 반환시간, 대기시간 
@@ -78,7 +110,6 @@ public class AlgorithmDahye {
 		for (int i = 0; i < ProcessCount; i++) {
 			SJFGantt.add(SJFReadyQueue[i]);
 		}
-
 		return SJFGantt;
 	}
 
