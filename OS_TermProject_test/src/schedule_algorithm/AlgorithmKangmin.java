@@ -24,6 +24,7 @@ public class AlgorithmKangmin {
 	 Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
+	 Vector<ArgumentVector> NPPGantt = new Vector<ArgumentVector>();
 	
 
 	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
@@ -320,6 +321,13 @@ public class AlgorithmKangmin {
 			}
 		}
 		return SRTGantt;
+	}
+	
+	Vector<ArgumentVector> NPP(){
+		
+		
+		
+		return NPPGantt;
 	}
 	
 	double ReturnRRReturnTime() {

@@ -16,10 +16,16 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
+      Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
+<<<<<<< HEAD
       Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
       Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
+=======
+      Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
+      
+>>>>>>> branch 'main' of https://github.com/dahye-program/CPU_Scheduling_Simulator.git
       
       int TotalRunningTime = 0;
       double FCFSTotalWaitingTime = 0;
