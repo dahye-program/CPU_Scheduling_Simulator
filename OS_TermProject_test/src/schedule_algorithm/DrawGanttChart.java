@@ -46,11 +46,7 @@ public class DrawGanttChart extends JFrame{
       
       // Dahye Code
       SJFGantt = dahye.SJF();
-      HRNGantt = dahye.HRN();
-<<<<<<< HEAD
-=======
-      NonPreemptionGantt = dahye.NonPreemption();
->>>>>>> refs/remotes/origin/main
+      //HRNGantt = dahye.HRN();
             
       //System.out.println(RoundRobinGantt.size());
       

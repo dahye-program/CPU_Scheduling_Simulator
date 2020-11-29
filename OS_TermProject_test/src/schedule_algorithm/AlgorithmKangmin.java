@@ -326,8 +326,7 @@ public class AlgorithmKangmin {
 	Vector<ArgumentVector> NPP(){
 		ArgumentVector[] NPPReadyQueue = new ArgumentVector[ProcessCount];
 		ArgumentVector Temp = new ArgumentVector(0, 0, null, 0, null);
-<<<<<<< HEAD
-=======
+
 		
 		for(int i=0;i<ProcessCount;i++) {
 			NPPReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
@@ -342,8 +341,6 @@ public class AlgorithmKangmin {
 				}
 			}
 		}
-		
->>>>>>> refs/remotes/origin/main
 		
 		int currentRunningTime = 0;
 		boolean isComplete = false;
