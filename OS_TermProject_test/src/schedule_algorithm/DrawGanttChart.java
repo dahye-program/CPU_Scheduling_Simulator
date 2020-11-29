@@ -16,7 +16,7 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
-      Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
+      Vector<ArgumentVector> NPPGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
@@ -41,11 +41,11 @@ public class DrawGanttChart extends JFrame{
       RoundRobinGantt = kangmin.RoundRobin();
       PreemptionGantt = kangmin.Preemption();
       SRTGantt = kangmin.SRT();
+      NPPGantt = kangmin.NPP();
       
       // Dahye Code
       SJFGantt = dahye.SJF();
       HRNGantt = dahye.HRN();
-     // NonPreemptionGantt = dahye.NonPreemption();
             
       //System.out.println(RoundRobinGantt.size());
       
@@ -100,10 +100,10 @@ public class DrawGanttChart extends JFrame{
       Canvas[] RoundRobin = new Canvas[RoundRobinGantt.size()];
       Canvas[] Preemption = new Canvas[PreemptionGantt.size()];
       Canvas[] SRT = new Canvas[SRTGantt.size()];
+      Canvas[] NPP = new Canvas[NPPGantt.size()];
       
       Canvas[] SJF = new Canvas[SJFGantt.size()];
       Canvas[] HRN = new Canvas[HRNGantt.size()];
-      //Canvas[] NPP = new Canvas[NPPGantt.size()];
       
       int secondTemp = 0;
       int second = 1;
@@ -193,6 +193,15 @@ public class DrawGanttChart extends JFrame{
     	  SRT[i].setBounds(10+SRTTemp, 500, SRTGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
     	  SRTTemp += (SRTGantt.get(i).ReturnRunningTime()*STANDARDPX);
     	  getContentPane().add(SRT[i]);
+      }
+      
+      int NPPTemp = 0;
+      for(int i=0;i<NPPGantt.size();i++) {
+    	  NPP[i] = new Canvas();
+    	  NPP[i].setBackground(NPPGantt.get(i).ReturnColor());
+    	  NPP[i].setBounds(10+NPPTemp,800 ,NPPGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+    	  NPPTemp +=(NPPGantt.get(i).ReturnRunningTime()*STANDARDPX);
+    	  getContentPane().add(NPP[i]);
       }
       
       

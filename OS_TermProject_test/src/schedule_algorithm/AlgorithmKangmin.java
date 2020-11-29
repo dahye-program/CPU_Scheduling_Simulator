@@ -324,7 +324,56 @@ public class AlgorithmKangmin {
 	}
 	
 	Vector<ArgumentVector> NPP(){
+		ArgumentVector[] NPPReadyQueue = new ArgumentVector[ProcessCount];
+		ArgumentVector Temp = new ArgumentVector(0, 0, null, 0, null);
 		
+		int currentRunningTime = 0;
+		boolean isComplete = false;
+		boolean isAdd = false;
+		
+		for(int i=0;i<ProcessCount;i++) {
+			NPPReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+		}
+		
+		for(int i=ProcessCount-1;i>=0;i--) {
+			for(int j=0;j<i;j++) {
+				if(NPPReadyQueue[j].ReturnPriority()>NPPReadyQueue[j+1].ReturnPriority()) {
+					Temp = NPPReadyQueue[j];
+					NPPReadyQueue[j] = NPPReadyQueue[j+1];
+					NPPReadyQueue[j+1] = Temp;
+				}
+			}
+		}
+		
+		while(true) {
+			isComplete = false;
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(NPPReadyQueue[i].ReturnRunningTime()>0) {
+					isComplete = true;
+				}
+			}
+			
+			if(!isComplete) {
+				break;
+			}
+			
+			isAdd = false;
+			
+			for(int i=0;i<ProcessCount;i++) {
+				if(NPPReadyQueue[i].ReturnRunningTime()>0 && NPPReadyQueue[i].ReturnArrivalTime()<currentRunningTime) {
+					NPPGantt.add(NPPReadyQueue[i].clone());
+					currentRunningTime+=NPPReadyQueue[i].ReturnRunningTime();
+					NPPReadyQueue[i].SetRunningTime(0);
+					isAdd = true;
+				}
+			}
+			
+			if(!isAdd) {
+				currentRunningTime++;
+			}
+			
+		}
 		
 		
 		return NPPGantt;
