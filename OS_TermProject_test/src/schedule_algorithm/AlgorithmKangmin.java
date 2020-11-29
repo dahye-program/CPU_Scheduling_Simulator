@@ -324,6 +324,23 @@ public class AlgorithmKangmin {
 	}
 	
 	Vector<ArgumentVector> NPP(){
+		ArgumentVector[] NPPReadyQueue = new ArgumentVector[ProcessCount];
+		ArgumentVector Temp = new ArgumentVector(0, 0, null, 0, null);
+		
+		for(int i=0;i<ProcessCount;i++) {
+			NPPReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+		}
+		
+		for (int i = ProcessCount - 1; i > 0; i--) {
+			for (int j = 0; j < i; j++) {
+				if (NPPReadyQueue[j].ReturnArrivalTime() > NPPReadyQueue[j + 1].ReturnArrivalTime()) {
+					Temp = NPPReadyQueue[j];
+					NPPReadyQueue[j] = NPPReadyQueue[j + 1];
+					NPPReadyQueue[j + 1] = Temp;
+				}
+			}
+		}
+		
 		
 		
 		
