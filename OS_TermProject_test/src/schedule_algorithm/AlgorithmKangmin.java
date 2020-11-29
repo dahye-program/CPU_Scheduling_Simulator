@@ -352,7 +352,7 @@ public class AlgorithmKangmin {
 				if(NPPReadyQueue[i].ReturnRunningTime()>0) {
 					isComplete = true;
 				}
-			}
+			}//fdsa
 			
 			if(!isComplete) {
 				break;
