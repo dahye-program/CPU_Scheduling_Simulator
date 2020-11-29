@@ -26,6 +26,7 @@ public class AlgorithmKangmin {
 	 Vector<ArgumentVector> FCFSGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
+	 Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
 	
 
 	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
@@ -246,6 +247,82 @@ public class AlgorithmKangmin {
 		/////////////////////////////////////////////////
 		
 		return PreemptionGantt;
+	}
+	
+	Vector<ArgumentVector> SRT(){
+		ArgumentVector[] SRTReadyQueue = new ArgumentVector[ProcessCount];
+		ArgumentVector Temp = new ArgumentVector(0, 0, null, 0, null);
+		
+		
+		for(int i=0;i<ProcessCount;i++) {
+			SRTReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+		}
+		
+		for(int i = ProcessCount - 1;i>=0;i--) {
+			for(int j=0;j<i;j++) {
+				if(SRTReadyQueue[j].ArrivalTime>SRTReadyQueue[j+1].ArrivalTime) {
+					Temp = SRTReadyQueue[j+1].clone();
+					SRTReadyQueue[j+1] = SRTReadyQueue[j].clone();
+					SRTReadyQueue[j] = Temp.clone();
+				}
+			}
+		}
+		
+		boolean isComplete = false;
+		int TempRunningTime;
+		double totalRunnigTime = 0;
+		int tempLoop = 0;
+
+		int SRTLoop = 0;
+
+		while (true) {
+			isComplete = false;
+			// System.out.println("hit");
+			for (int i = 0; i < ProcessCount; i++) {
+				if (SRTReadyQueue[i].RunningTime > 0) {
+					isComplete = true;
+				}
+			}
+
+			if (!isComplete)
+				break;
+			
+			for (SRTLoop = 0; SRTLoop < ProcessCount; SRTLoop++) {
+				if (SRTReadyQueue[SRTLoop].ReturnRunningTime() > 0) {
+					if (SRTReadyQueue[SRTLoop].ReturnRunningTime() < TimeSlice) {
+						SRTGantt.add(SRTReadyQueue[SRTLoop].clone());
+						SRTReadyQueue[SRTLoop].RunningTime = 0;
+						for (int i = ProcessCount - 1; i >= 0; i--) {
+							for (int j = 0; j < i; j++) {
+								if (SRTReadyQueue[j].ReturnRunningTime() > SRTReadyQueue[j + 1].ReturnRunningTime()) {
+									Temp = SRTReadyQueue[j + 1].clone();
+									SRTReadyQueue[j + 1] = SRTReadyQueue[j].clone();
+									SRTReadyQueue[j] = Temp.clone();
+								}
+							}
+						}
+						break;
+					} else {
+						TempRunningTime = SRTReadyQueue[SRTLoop].ReturnRunningTime();
+						SRTReadyQueue[SRTLoop].SetRunningTime(TimeSlice);
+						SRTGantt.add(SRTReadyQueue[SRTLoop].clone());
+						SRTReadyQueue[SRTLoop].SetRunningTime(TempRunningTime - TimeSlice); // 여기서 수정하면서 위에 add한것도 같이
+						for (int i = ProcessCount - 1; i >= 0; i--) {
+							for (int j = 0; j < i; j++) {
+								if (SRTReadyQueue[j].ReturnRunningTime() > SRTReadyQueue[j + 1].ReturnRunningTime()) {
+									Temp = SRTReadyQueue[j + 1].clone();
+									SRTReadyQueue[j + 1] = SRTReadyQueue[j].clone();
+									SRTReadyQueue[j] = Temp.clone();
+								}
+							}
+						}
+						break;
+					}
+					
+				}
+			}
+		}
+		return SRTGantt;
 	}
 	
 	double ReturnRRReturnTime() {

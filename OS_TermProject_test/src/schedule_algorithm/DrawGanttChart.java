@@ -15,10 +15,10 @@ public class DrawGanttChart extends JFrame{
       Vector<ArgumentVector> FCFSGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> RoundRobinGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> PreemptionGantt = new Vector<ArgumentVector>();
+      Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
       
       Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> HRNGantt = new Vector<ArgumentVector>();
-      Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
       Vector<ArgumentVector> NonPreemptionGantt = new Vector<ArgumentVector>();
       
       int TotalRunningTime = 0;
@@ -39,11 +39,11 @@ public class DrawGanttChart extends JFrame{
       FCFSGantt = kangmin.FCFS();
       RoundRobinGantt = kangmin.RoundRobin();
       PreemptionGantt = kangmin.Preemption();
+      SRTGantt = kangmin.SRT();
       
       // Dahye Code
       SJFGantt = dahye.SJF();
       HRNGantt = dahye.HRN();
-     // SRTGantt = dahye.SRT();
      // NonPreemptionGantt = dahye.NonPreemption();
             
       //System.out.println(RoundRobinGantt.size());
@@ -98,8 +98,8 @@ public class DrawGanttChart extends JFrame{
       Canvas[] FCFS = new Canvas[ProcessCount];
       Canvas[] RoundRobin = new Canvas[RoundRobinGantt.size()];
       Canvas[] Preemption = new Canvas[PreemptionGantt.size()];
+      Canvas[] SRT = new Canvas[SRTGantt.size()];
       
-      //Canvas[] SRT = new Canvas[SRTGantt.size()];
       Canvas[] SJF = new Canvas[SJFGantt.size()];
       Canvas[] HRN = new Canvas[HRNGantt.size()];
       //Canvas[] NPP = new Canvas[NPPGantt.size()];
@@ -185,6 +185,15 @@ public class DrawGanttChart extends JFrame{
     	  getContentPane().add(Preemption[i]);
       }
       
+      int SRTTemp = 0;
+      for(int i=0;i<SRTGantt.size();i++) {
+    	  SRT[i] = new Canvas();
+    	  SRT[i].setBackground(SRTGantt.get(i).ReturnColor());
+    	  SRT[i].setBounds(10+SRTTemp, 500, SRTGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+    	  SRTTemp += (SRTGantt.get(i).ReturnRunningTime()*STANDARDPX);
+    	  getContentPane().add(SRT[i]);
+      }
+      
       
       int SJFTemp = 0;
       for(int i=0;i<SJFGantt.size();i++) {
@@ -199,7 +208,7 @@ public class DrawGanttChart extends JFrame{
       for(int i=0;i<HRNGantt.size();i++) {
     	  HRN[i] = new Canvas();
     	  HRN[i].setBackground(HRNGantt.get(i).ReturnColor());
-    	  HRN[i].setBounds(10+HRNTemp, 600, HRNGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+    	  HRN[i].setBounds(10+HRNTemp, 700, HRNGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
     	  HRNTemp += (HRNGantt.get(i).ReturnRunningTime()*STANDARDPX);
     	  getContentPane().add(HRN[i]);
       }
