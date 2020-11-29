@@ -163,9 +163,6 @@ public class AlgorithmKangmin {
 		for(int j=0;j<RRReadyQueue.length;j++) {
 			RRTotalWaitingTime +=RRReadyQueue[j].WaitingTime;
 		}
-		//////////////////////////////////////////////
-		
-		// System.out.println(RoundRobinGantt.size());
 		return RoundRobinGantt;
 	}
 	
@@ -268,59 +265,77 @@ public class AlgorithmKangmin {
 		}
 		
 		boolean isComplete = false;
+		boolean isAdd = false;
+		int currentRunningTime = 0;
 		int TempRunningTime;
-		double totalRunnigTime = 0;
-		int tempLoop = 0;
-
-		int SRTLoop = 0;
-
-		while (true) {
-			isComplete = false;
-			// System.out.println("hit");
-			for (int i = 0; i < ProcessCount; i++) {
-				if (SRTReadyQueue[i].RunningTime > 0) {
-					isComplete = true;
-				}
-			}
-
-			if (!isComplete)
-				break;
+		
+		while(true) {
 			
-			for (SRTLoop = 0; SRTLoop < ProcessCount; SRTLoop++) {
-				if (SRTReadyQueue[SRTLoop].ReturnRunningTime() > 0) {
-					if (SRTReadyQueue[SRTLoop].ReturnRunningTime() < TimeSlice) {
-						SRTGantt.add(SRTReadyQueue[SRTLoop].clone());
-						SRTReadyQueue[SRTLoop].RunningTime = 0;
-						for (int i = ProcessCount - 1; i >= 0; i--) {
-							for (int j = 0; j < i; j++) {
-								if (SRTReadyQueue[j].ReturnRunningTime() > SRTReadyQueue[j + 1].ReturnRunningTime()) {
-									Temp = SRTReadyQueue[j + 1].clone();
-									SRTReadyQueue[j + 1] = SRTReadyQueue[j].clone();
-									SRTReadyQueue[j] = Temp.clone();
-								}
-							}
-						}
-						break;
-					} else {
-						TempRunningTime = SRTReadyQueue[SRTLoop].ReturnRunningTime();
-						SRTReadyQueue[SRTLoop].SetRunningTime(TimeSlice);
-						SRTGantt.add(SRTReadyQueue[SRTLoop].clone());
-						SRTReadyQueue[SRTLoop].SetRunningTime(TempRunningTime - TimeSlice); // 여기서 수정하면서 위에 add한것도 같이
-						for (int i = ProcessCount - 1; i >= 0; i--) {
-							for (int j = 0; j < i; j++) {
-								if (SRTReadyQueue[j].ReturnRunningTime() > SRTReadyQueue[j + 1].ReturnRunningTime()) {
-									Temp = SRTReadyQueue[j + 1].clone();
-									SRTReadyQueue[j + 1] = SRTReadyQueue[j].clone();
-									SRTReadyQueue[j] = Temp.clone();
-								}
-							}
-						}
-						break;
-					}
-					
+			System.out.println("hit");
+			
+			isComplete = false;
+			
+			for (int i = 0; i < ProcessCount; i++) {
+				if (SRTReadyQueue[i].ReturnRunningTime() > 0) {
+					isComplete = true;
+					break;
 				}
 			}
+
+			if (!isComplete) {
+				break;
+			}
+			
+			for (int i = 0; i < ProcessCount; i++) {
+				if (SRTReadyQueue[i].ReturnRunningTime() > 0
+						&& SRTReadyQueue[i].ReturnArrivalTime() <= currentRunningTime) {
+					if (SRTReadyQueue[i].ReturnRunningTime() > TimeSlice) {
+						TempRunningTime = SRTReadyQueue[i].ReturnRunningTime();
+						SRTReadyQueue[i].SetRunningTime(TimeSlice);
+						SRTGantt.add(SRTReadyQueue[i].clone());
+						currentRunningTime += SRTReadyQueue[i].ReturnRunningTime();
+						SRTReadyQueue[i].SetRunningTime(TempRunningTime - TimeSlice);
+
+						isAdd = true;
+
+						for (int j = ProcessCount - 1; j >= 0; j--) {
+							for (int k = 0; k < j; k++) {
+								if (SRTReadyQueue[k].ReturnRunningTime() > SRTReadyQueue[k + 1].ReturnRunningTime()) {
+									Temp = SRTReadyQueue[k];
+									SRTReadyQueue[k] = SRTReadyQueue[k + 1];
+									SRTReadyQueue[k + 1] = Temp;
+								}
+							}
+						}
+					} else {
+						SRTGantt.add(SRTReadyQueue[i].clone());
+						currentRunningTime += SRTReadyQueue[i].ReturnRunningTime();
+						SRTReadyQueue[i].SetRunningTime(0);
+
+						isAdd = true;
+
+						for (int j = ProcessCount - 1; j >= 0; j--) {
+							for (int k = 0; k < j; k++) {
+								if (SRTReadyQueue[k].ReturnRunningTime() > SRTReadyQueue[k + 1].ReturnRunningTime()) {
+									Temp = SRTReadyQueue[k];
+									SRTReadyQueue[k] = SRTReadyQueue[k + 1];
+									SRTReadyQueue[k + 1] = Temp;
+								}
+							}
+						}
+					}
+					break;
+				}
+			}
+
+			if (!isAdd) {
+				currentRunningTime++;
+			}
+			
+			isAdd = false;
+			
 		}
+		
 		return SRTGantt;
 	}
 	
@@ -382,6 +397,7 @@ public class AlgorithmKangmin {
 					currentRunningTime+=NPPReadyQueue[i].ReturnRunningTime();
 					NPPReadyQueue[i].SetRunningTime(0);
 					isAdd = true;
+					break;
 				}
 			}
 			
@@ -449,11 +465,14 @@ public class AlgorithmKangmin {
 							}
 						}
 					}
+					
 					isAdd = true;
 				}
+				
 				if(!isAdd) {
 					currentRunningTime++;
 				}
+				
 				isAdd = false;
 			}
 		}
