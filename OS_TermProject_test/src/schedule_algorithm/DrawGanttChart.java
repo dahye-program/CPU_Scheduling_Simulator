@@ -24,6 +24,10 @@ public class DrawGanttChart extends JFrame{
       int TotalRunningTime = 0;
       double FCFSTotalWaitingTime = 0;
       double FCFSTotalReturnTime = 0;
+      double RRAWT = 0;
+      double RRATT = 0;
+      double PPAWT = 0;
+      double PPATT = 0;
       
       for(int i=0;i<ProcessCount;i++) {
          TotalRunningTime += RunningTime[i];
@@ -157,15 +161,10 @@ public class DrawGanttChart extends JFrame{
          FCFS[i] = new Canvas();
          FCFS[i].setBackground(FCFSGantt.get(i).ReturnColor());
          FCFS[i].setBounds(10 + FCFSTemp, 200, FCFSGantt.get(i).ReturnRunningTime() * STANDARDPX, STANDARDPX);
+         FCFSTotalReturnTime += FCFSTemp/STANDARDPX + FCFSGantt.get(i).ReturnRunningTime(); // GUI아님         
          FCFSTemp += (FCFSGantt.get(i).ReturnRunningTime() * STANDARDPX);
-         
-         /////////////////////////GUI말고 다른부분////////////////////////////
-         FCFSGantt.get(i).SetWaitingTime(FCFSTemp-FCFSGantt.get(i).ArrivalTime);
-         FCFSTotalWaitingTime+=FCFSGantt.get(i).WaitingTime;
-         FCFSTotalReturnTime+=FCFSTemp;
-         //////////////////////////////////////////////////////////////////
-         
          getContentPane().add(FCFS[i]);
+         FCFSTotalWaitingTime+= FCFSTemp/STANDARDPX - FCFSGantt.get(i).ArrivalTime;			// GUI아님
       }
       
       int RoundRobinTemp = 0;
@@ -208,5 +207,29 @@ public class DrawGanttChart extends JFrame{
       //평균대기시간 평균반환시간 계산
       FCFSTotalWaitingTime = FCFSTotalWaitingTime / (double)ProcessCount;
       FCFSTotalReturnTime = FCFSTotalReturnTime / (double)ProcessCount;
+      JLabel LabelFCFSAWT = new JLabel("평균 대기 시간 : " + FCFSTotalWaitingTime);
+      JLabel LabelFCFSATT = new JLabel("평균 반환 시간 : " + FCFSTotalReturnTime);
+      LabelFCFSAWT.setBounds(10, 240, 300, 20);
+      LabelFCFSATT.setBounds(310, 240, 300, 20);
+      getContentPane().add(LabelFCFSAWT);
+      getContentPane().add(LabelFCFSATT);
+      
+      RRATT = kangmin.ReturnRRReturnTime() / (double)ProcessCount;
+      RRAWT = kangmin.ReturnRRWainttime() / (double)ProcessCount;
+      JLabel LabelRRAWT = new JLabel("평균 대기 시간 : " + RRAWT);
+      JLabel LabelRRATT = new JLabel("평균 반환 시간 : " + RRATT);
+      LabelRRAWT.setBounds(10, 340, 300, 20);
+      LabelRRATT.setBounds(310, 340, 300, 20);
+      getContentPane().add(LabelRRAWT);
+      getContentPane().add(LabelRRATT);
+      
+      PPATT = kangmin.ReturnPPReturnTime() / (double)ProcessCount;
+      
+      JLabel LabelPPAWT = new JLabel("평균 대기 시간 : " + PPAWT);
+      JLabel LabelPPATT = new JLabel("평균 반환 시간 : " + PPATT);
+      LabelPPAWT.setBounds(10, 440, 300, 20);
+      LabelPPATT.setBounds(310, 440, 300, 20);
+      getContentPane().add(LabelPPAWT);
+      getContentPane().add(LabelPPATT);
    }
 }

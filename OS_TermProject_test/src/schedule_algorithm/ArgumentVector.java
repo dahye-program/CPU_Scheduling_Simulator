@@ -8,9 +8,9 @@ public class ArgumentVector {
 	int RunningTime;
 	String PID;
 	int Priority;
-	int WaitingTime;
-	int ReturnTime;
-	int ResponTime;
+	double WaitingTime = 0;
+	double ReturnTime;
+	int RespawnTime;
 	public Color color;
 	
 	public ArgumentVector(int ArrivalTime, int RunningTime, String PID, int Priority, Color color) {
@@ -18,13 +18,6 @@ public class ArgumentVector {
 		this.RunningTime = RunningTime;
 		this.PID = PID;
 		this.Priority = Priority;
-		
-		
-//		Random rand = new Random();
-//		float r = rand.nextFloat() / 2f + (float)0.5;
-//		float g = rand.nextFloat() / 2f + (float)0.5;
-//		float b = rand.nextFloat() / 2f + (float)0.5;
-//		color = new Color(r, g, b);
 		this.color = color;
 	}
 	
@@ -39,8 +32,20 @@ public class ArgumentVector {
 		this.RunningTime = RunningTime;
 	}
 	
-	void SetWaitingTime(int WaitingTime) {
-		this.WaitingTime = WaitingTime;
+	void SetWaitingTime(double WaitingTime) {
+		this.WaitingTime += WaitingTime;
+	}
+	
+	void SetRespawnTime (int SpawnTime) {
+		this.RespawnTime = SpawnTime;
+	}
+	
+	void SetReturnTime (double ReturnTime) {
+		this.ReturnTime = ReturnTime;
+	}
+	
+	void AddWaitingTime (double WaitingTime) {
+		this.WaitingTime += WaitingTime;
 	}
 	
 	int GetRunningTime() {
