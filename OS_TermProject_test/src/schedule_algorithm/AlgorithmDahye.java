@@ -35,6 +35,7 @@ public class AlgorithmDahye {
 
 	Vector<ArgumentVector> SJF() {
 		int totalWaitingTime = 0;
+		int currentTime = 0;
 		ArgumentVector[] SJFReadyQueue = new ArgumentVector[ProcessCount];
 
 		for (int i = 0; i < ProcessCount; i++) {
@@ -52,11 +53,6 @@ public class AlgorithmDahye {
 				}
 			}
 		}
-		// 첫번째로 도착한 프로세스 제외하고
-		SJFReadyQueue[0].WaitingTime = totalWaitingTime - SJFReadyQueue[0].ArrivalTime;
-		totalWaitingTime += SJFReadyQueue[0].RunningTime;
-		SJFReadyQueue[0].ReturnTime = totalWaitingTime;
-
 		// 2번째 프로세스부터 작업 시간 짧은 순으로 정렬 -> 작업 시간 오름차순
 		for (int i = 1; i < ProcessCount - 1; i++) {
 			if (SJFReadyQueue[i].GetRunningTime() > SJFReadyQueue[i + 1].GetRunningTime()) {
@@ -65,10 +61,10 @@ public class AlgorithmDahye {
 				SJFReadyQueue[i + 1] = SJFTemp;
 			}
 		}
-		for (int i = 0; i < ProcessCount; i++) {
-			SJFReadyQueue[i].WaitingTime = totalWaitingTime - SJFReadyQueue[i].ArrivalTime;
-			totalWaitingTime += SJFReadyQueue[i].RunningTime;
-			SJFReadyQueue[i].ReturnTime = totalWaitingTime;
+		for(int i=0; i<ProcessCount-1; i++) {
+			SJFReadyQueue[i].WaitingTime = currentTime - SJFReadyQueue[i].ReturnArrivalTime();
+			currentTime += SJFReadyQueue[i].RunningTime;
+			SJFReadyQueue[i].ReturnTime = currentTime-SJFReadyQueue[i].ReturnArrivalTime();
 		}
 
 		for (int i = 0; i < ProcessCount; i++) {
@@ -107,16 +103,18 @@ public class AlgorithmDahye {
 	         if (HRNReadyQueue[i].ReturnRunningTime() > 0) {
 	            HRNGantt.add(HRNReadyQueue[i]);
 	            currentRunningTime += HRNReadyQueue[i].ReturnRunningTime();
-	            for (int j = 1; j < ProcessCount; j++) {
-	               if (HRNReadyQueue[j].ReturnArrivalTime() >= currentRunningTime) {
+	            for (int j = 1; j < ProcessCount-1; j++) {
+	               if (HRNReadyQueue[j].ReturnArrivalTime() <= currentRunningTime && HRNReadyQueue[j].ReturnRunningTime() > 0) {
+	            	   //우선순위 계산해서 priority set
 	                  HRNReadyQueue[j].setPriority((double)(currentRunningTime - HRNReadyQueue[j].ReturnArrivalTime()
 		                        + (double)HRNReadyQueue[j].ReturnRunningTime()) / (double)HRNReadyQueue[j].ReturnRunningTime());
-	               }         
+	               }
 	            }
 	         }
 	         i++;
-	         if (i == ProcessCount)
+	         if (i == ProcessCount-1) {
 	            break;
+	         }
 	      }
 
 
