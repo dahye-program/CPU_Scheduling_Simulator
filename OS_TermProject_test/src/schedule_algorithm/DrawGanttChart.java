@@ -102,7 +102,6 @@ public class DrawGanttChart extends JFrame{
       Canvas[] Preemption = new Canvas[PreemptionGantt.size()];
       Canvas[] SRT = new Canvas[SRTGantt.size()];
       Canvas[] NPP = new Canvas[NPPGantt.size()];
-      
       Canvas[] SJF = new Canvas[SJFGantt.size()];
       Canvas[] HRN = new Canvas[HRNGantt.size()];
       

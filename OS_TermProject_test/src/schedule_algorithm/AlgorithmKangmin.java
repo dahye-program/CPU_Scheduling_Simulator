@@ -390,8 +390,6 @@ public class AlgorithmKangmin {
 			}
 			
 		}
-		
-		
 		return NPPGantt;
 	}
 	
@@ -421,8 +419,6 @@ public class AlgorithmKangmin {
 		int currentRunningTime = 0;
 		
 		while(true) {
-			
-			System.out.println("hit");
 			
 			isComplete = false;
 			
