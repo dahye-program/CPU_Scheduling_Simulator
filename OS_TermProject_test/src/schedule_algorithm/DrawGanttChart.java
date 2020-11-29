@@ -38,7 +38,7 @@ public class DrawGanttChart extends JFrame{
       
       // Dahye Code
       SJFGantt = dahye.SJF();
-     // HRNGantt = dahye.HRN();
+      HRNGantt = dahye.HRN();
      // SRTGantt = dahye.SRT();
      // NonPreemptionGantt = dahye.NonPreemption();
             
@@ -97,7 +97,7 @@ public class DrawGanttChart extends JFrame{
       
       //Canvas[] SRT = new Canvas[SRTGantt.size()];
       Canvas[] SJF = new Canvas[SJFGantt.size()];
-      //Canvas[] HRN = new Canvas[HRNGantt.size()];
+      Canvas[] HRN = new Canvas[HRNGantt.size()];
       //Canvas[] NPP = new Canvas[NPPGantt.size()];
       
       int secondTemp = 0;
@@ -194,6 +194,15 @@ public class DrawGanttChart extends JFrame{
     	  SJF[i].setBounds(10+SJFTemp, 600, SJFGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
     	  SJFTemp += (SJFGantt.get(i).ReturnRunningTime()*STANDARDPX);
     	  getContentPane().add(SJF[i]);
+      }
+      
+      int HRNTemp = 0;
+      for(int i=0;i<HRNGantt.size();i++) {
+    	  HRN[i] = new Canvas();
+    	  HRN[i].setBackground(HRNGantt.get(i).ReturnColor());
+    	  HRN[i].setBounds(10+HRNTemp, 600, HRNGantt.get(i).ReturnRunningTime()*STANDARDPX, STANDARDPX);
+    	  HRNTemp += (HRNGantt.get(i).ReturnRunningTime()*STANDARDPX);
+    	  getContentPane().add(HRN[i]);
       }
       
       //평균대기시간 평균반환시간 계산
