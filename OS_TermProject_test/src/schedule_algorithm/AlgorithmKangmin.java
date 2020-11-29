@@ -26,6 +26,7 @@ public class AlgorithmKangmin {
 	 Vector<ArgumentVector> SRTGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector> NPPGantt = new Vector<ArgumentVector>();
 	 Vector<ArgumentVector_> HRNGantt = new Vector<ArgumentVector_>();
+	 Vector<ArgumentVector> SJFGantt = new Vector<ArgumentVector>();
 	
 
 	public AlgorithmKangmin(int ProcessCount, int TimeSlice, String[] PID, int[] ArrivalTime, int[] RunningTime, int[] Priority, Color[] color) {
@@ -271,8 +272,6 @@ public class AlgorithmKangmin {
 		
 		while(true) {
 			
-			System.out.println("hit");
-			
 			isComplete = false;
 			
 			for (int i = 0; i < ProcessCount; i++) {
@@ -478,6 +477,67 @@ public class AlgorithmKangmin {
 		}
 		return HRNGantt;
 	}
+	
+	Vector<ArgumentVector> SJF(){
+		
+		ArgumentVector[] SJFReadyQueue = new ArgumentVector[ProcessCount];
+		ArgumentVector Temp = new ArgumentVector(0, 0, null, 0, null);
+		
+		for(int i=0;i<ProcessCount;i++) {
+			SJFReadyQueue[i] = new ArgumentVector(ArrivalTime[i], RunningTime[i], PID[i], Priority[i], color[i]);
+		}
+		
+		for(int i=ProcessCount-1;i>=0;i--) {
+			for(int j=0;j<i;j++) {
+				if(SJFReadyQueue[j].ReturnRunningTime()>SJFReadyQueue[j+1].ReturnRunningTime()) {
+					Temp = SJFReadyQueue[j];
+					SJFReadyQueue[j] = SJFReadyQueue[j+1];
+					SJFReadyQueue[j+1] = Temp;
+				}
+			}
+		}
+		
+		boolean isComplete = false;
+		boolean isAdd = false;
+		int currentRunningTime = 0;
+		
+		while (true) {
+			
+			isComplete = false;
+
+			for (int i = 0; i < ProcessCount; i++) {
+				if (SJFReadyQueue[i].ReturnRunningTime() > 0) {
+					isComplete = true;
+					break;
+				}
+			}
+
+			if (!isComplete) {
+				break;
+			}
+
+			for (int i = 0; i < ProcessCount; i++) {
+				if (SJFReadyQueue[i].ReturnRunningTime() > 0 && SJFReadyQueue[i].ReturnArrivalTime() <= currentRunningTime) {
+					SJFGantt.add(SJFReadyQueue[i].clone());
+					currentRunningTime += SJFReadyQueue[i].ReturnRunningTime();
+					SJFReadyQueue[i].SetRunningTime(0);
+					isAdd = true;
+					break;
+				}
+			}
+
+			if (!isAdd) {
+				currentRunningTime++;
+			}
+			
+			isAdd = false;
+
+		}
+		
+		return SJFGantt;
+	}
+	
+	
 	
 	
 	double ReturnRRReturnTime() {

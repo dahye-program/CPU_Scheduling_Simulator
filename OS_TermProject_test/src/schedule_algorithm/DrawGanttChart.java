@@ -46,9 +46,9 @@ public class DrawGanttChart extends JFrame{
       SRTGantt = kangmin.SRT();
       NPPGantt = kangmin.NPP();
       HRNGantt = kangmin.HRN();
-      
+      SJFGantt = kangmin.SJF();
       // Dahye Code
-      SJFGantt = dahye.SJF();
+      
       
       // 여기서부터 GUI 영역
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
